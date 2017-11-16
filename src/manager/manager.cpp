@@ -1,0 +1,26 @@
+/** @example console.cpp
+ **
+ ** Entrypoint for the lesson_manager 
+ ** 
+ ** @version 0.0.1
+ **
+ ** @author Damien Choffe
+ ** @author Maxime Nicolas
+ ** @author Pierre Bouillon
+ **/
+
+/**
+ * @brief run the lesson_manager
+ *
+ * @param   argc    number of program parameters
+ * @param   argv    program parameters
+ *
+ * @return 0 on success
+ *
+ * @version 0.0.1
+ */
+int main(int argc, char const *argv[])
+{
+    return 0;
+} /* main(int argc, char const *argv[])*/
+    
