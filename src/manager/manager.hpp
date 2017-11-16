@@ -105,4 +105,18 @@ void Manager::logout ()
     isConnected = false ;
 }/* logout() */
 
+/**
+ * @fn toString()
+ *
+ * @brief String summary of Manager information
+ *
+ * @return (std::string) : formatted information
+ */
+std::string Person::toString () 
+{
+    ostringstream os ;
+    os << "Connected into the manager: " << this.isConnected << endl ;
+    return os.str() ;
+}/* toString() */
+
 #endif MANAGER_H
