@@ -59,10 +59,7 @@ Manager::Manager ()
 /**
  * @brief Manager destructor
  */
-Manager::~Manager()
-{
-    return ;
-}/* ~Manager() */
+Manager::~Manager () {} /* ~Manager() */
 
 /**
  * @fn getPerson

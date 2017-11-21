@@ -60,10 +60,7 @@ Person::Person (
 /**
  * @brief Person destructor
  */
-Person::~Person ()
-{
-    return ;
-}/* ~Person () */
+Person::~Person () {} /* ~Person () */
 
 /**
  * @fn getRights()
