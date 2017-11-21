@@ -49,13 +49,13 @@ private:
  * initialize parameters with specific values
  */
 Person::Person (
-            std::string name = "unidentified",
-            int rights = -1
+            std::string _name = "unidentified",
+            int _rights = -1
         )
 {
-    this.name   = name ;
-    this.rights = rights ;
-}/* Person() */
+    name   = _name ;
+    rights = _rights ;
+}/* Person () */
 
 /**
  * @brief Person destructor
@@ -63,7 +63,7 @@ Person::Person (
 Person::~Person ()
 {
     return ;
-}/* ~Person() */
+}/* ~Person () */
 
 /**
  * @fn getRights()
