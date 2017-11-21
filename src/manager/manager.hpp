@@ -35,7 +35,7 @@ protected:
     
 public:
     Person getPerson () ;
-    bool login (
+    int login (
                 std::string username, 
                 std::string psswd
             ) ;
@@ -44,6 +44,7 @@ public:
 
 private:
     bool isConnected ;
+	Lesson_db db ;
 }
 
 /**
@@ -54,6 +55,7 @@ private:
 Manager::Manager ()
 {
     isConnected = false ;
+	Lesson_db   = new Lesson_db () ;
 }/* Manager() */
 
 /**
@@ -82,12 +84,13 @@ Person Manager::getPerson ()
  *
  * @return (bool) : true on success
  */
-bool Manager::login (
+void Manager::login (
         std::string username,
         std::string psswd
     )
 {
-    isConnected = true ;
+	rigths = db.login (username.c_str(), psswd.c_str()) ;
+	isConnected = true ; 
 }/* login(std::string username, std::string psswd) */
 
 /**

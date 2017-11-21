@@ -118,15 +118,20 @@ void Lesson_db::disconnect ()
  */
 int Lesson_db::login (std::string login, std::string password)
 {
-    char* query ;
+   ostringstream os ;
 
     /**
      * Check if login/password exists
      * Select its rights
      */
     // TODO Request
-    query = "SELECT * FROM  `user` ;" ;
-    return atoi (db_query_exec (query)) ;
+    os << "SELECT `rights`" ;
+	os << "FROM  `user`" ;
+	os << "WHERE " ;
+	os << "`login` LIKE " << login ;
+	os << "`psswd` LIKE " << password ;
+	os << ";" ;
+    return atoi (db_query_exec (os.str())) ;
 
 } /* */
 
