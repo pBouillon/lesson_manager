@@ -74,7 +74,7 @@ Person::~Person ()
  */
 int Person::getRights () 
 {
-    return this.rights ;
+    return rights ;
 }/* getRights() */
 
 /**
@@ -86,7 +86,7 @@ int Person::getRights ()
  */
 std::string Person::getName () 
 {
-    return this.name ;
+    return name ;
 }/* getName() */
 
 /**
@@ -99,8 +99,8 @@ std::string Person::getName ()
 std::string Person::toString () 
 {
     ostringstream os ;
-    os << "User: " << this.name << ": \r\n" ;
-    os << "\tRights: " << this.rights << endl ;
+    os << "User: " << name << ": \r\n" ;
+    os << "\tRights: " << rights << endl ;
     return os.str() ;
 }/* toString() */
 
