@@ -115,7 +115,7 @@ void Manager::logout ()
 std::string Person::toString () 
 {
     ostringstream os ;
-    os << "Connected into the manager: " << this.isConnected << endl ;
+    os << "Connected into the manager: " << isConnected << endl ;
     return os.str() ;
 }/* toString() */
 
