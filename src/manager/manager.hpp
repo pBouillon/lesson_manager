@@ -12,6 +12,10 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
+#include <iostream>
+
+#include "lesson_db.hpp"
+
 /**
  * @brief used in Manager's source code
  */
@@ -27,17 +31,17 @@ class Person;
  * @author Maxime Nicolas
  * @author Pierre Bouillon
  */
-class Manager 
+class Manager
 {
 protected:
     Manager() ;
     ~Manager() ;
-    
+
 public:
     Person getPerson () ;
-    int login (
-                std::string username, 
-                std::string psswd
+    void login (
+            const std::string &username,
+            const std::string &psswd
             ) ;
     void logout () ;
     std::string toString () ;
@@ -61,7 +65,7 @@ Manager::Manager ()
 /**
  * @brief Manager destructor
  */
-Manager::~Manager () {} /* ~Manager() */
+Manager::~Manager () = default; /* ~Manager() */
 
 /**
  * @fn getPerson
@@ -70,10 +74,7 @@ Manager::~Manager () {} /* ~Manager() */
  *
  * @return (Person) : the connected user
  */
-Person Manager::getPerson () 
-{
-    return ;
-}/* getPerson() */
+Person Manager::getPerson () {} /* getPerson() */
 
 /**
  * @fn login
@@ -85,8 +86,8 @@ Person Manager::getPerson ()
  * @return (bool) : true on success
  */
 void Manager::login (
-        std::string username,
-        std::string psswd
+        const std::string &username,
+        const std::string &psswd
     )
 {
 	rigths = db.login (username.c_str(), psswd.c_str()) ;
@@ -114,8 +115,8 @@ void Manager::logout ()
  */
 std::string Person::toString () 
 {
-    ostringstream os ;
-    os << "Connected into the manager: " << isConnected << endl ;
+    std::ostringstream os ;
+    os << "Connected into the manager: " << isConnected << std::endl ;
     return os.str() ;
 }/* toString() */
 

@@ -11,6 +11,9 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include <iostream>
+#include <sstream>
+
 /**
  * @brief Person contains user's information
  *        such as his rights and name
@@ -60,7 +63,7 @@ Person::Person (
 /**
  * @brief Person destructor
  */
-Person::~Person () {} /* ~Person () */
+Person::~Person () = default; /* ~Person () */
 
 /**
  * @fn getRights()
@@ -95,9 +98,9 @@ std::string Person::getName ()
  */
 std::string Person::toString () 
 {
-    ostringstream os ;
+    std::ostringstream os ;
     os << "User: " << name << ": \r\n" ;
-    os << "\tRights: " << rights << endl ;
+    os << "\tRights: " << rights << std::endl ;
     return os.str() ;
 }/* toString() */
 

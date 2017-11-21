@@ -17,6 +17,10 @@
 
 #include "rights.hpp"
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 #define DB_ERR_CONNECT  1
 
 
@@ -59,7 +63,8 @@ public:
 
 private:
     void   abort_db (char* err_txt, int err_code) ;
-    char*  db_query_exec (char* sql) ;
+    char*  db_query_exec (
+            std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char>>::__string_type sql) ;
 
     sqlite3 *db ;
     char*    db_file ;
@@ -69,7 +74,7 @@ private:
 /**
  * @brief Lesson_db constructor
  */
-Lesson_db::Lesson_db (char* filename = ":memory:")
+Lesson_db::Lesson_db (char* filename = const_cast<char *>(":memory:"))
 {
     db_file = filename ;
 } /* Lesson_db () */
@@ -77,7 +82,7 @@ Lesson_db::Lesson_db (char* filename = ":memory:")
 /**
  * @brief ~Lesson_db destructor
  */
-Lesson_db::~Lesson_db () {} /* ~Lesson_db () */
+Lesson_db::~Lesson_db () = default; /* ~Lesson_db () */
 
 
 /**
@@ -92,7 +97,7 @@ void Lesson_db::connect ()
     std::stringstream buffer ;
 
     // open db
-    if (sqlite3_open (filename, &db) < 0) 
+    if (sqlite3_open (db_file, &db) < 0)
     {
         abort_db (sqlite3_errmsg(db), DB_ERR_CONNECT) ;  
     }
@@ -118,7 +123,7 @@ void Lesson_db::disconnect ()
  */
 int Lesson_db::login (std::string login, std::string password)
 {
-   ostringstream os ;
+   std::ostringstream os ;
 
     /**
      * Check if login/password exists
@@ -139,7 +144,7 @@ int Lesson_db::login (std::string login, std::string password)
  *
  */
 void Lesson_db::abort_db (
-    char* err_txt = "Unexpected error", 
+    char* err_txt = const_cast<char *>("Unexpected error"),
     int err_code  = EXIT_FAILURE
     )
 {
@@ -150,7 +155,8 @@ void Lesson_db::abort_db (
 /**
  *
  */
-char* Lesson_db::db_query_exec (char* sql) 
+char* Lesson_db::db_query_exec (
+        std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char>>::__string_type sql)
 {
     int rc ;
     char *zErrMsg ;

@@ -80,3 +80,9 @@ CMakeLists.txt.user*
 *.cbp
 *.layout
 *.depend
+
+#---------------------
+# CLion --------------
+#---------------------
+*.idea/
+CMakeLists.txt
