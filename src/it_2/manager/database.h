@@ -53,3 +53,25 @@ private: /* attributes */
 } ;
 
 #endif //DATABASE_H_
+
+
+
+
+
+/**
+ * \name    Example API Actions
+ * \brief   Example actions available.
+ * \ingroup example
+ *
+ * This API provides certain actions as an example.
+ *
+ * \param [in] repeat  Number of times to do nothing.
+ *
+ * \retval TRUE   Successfully did nothing.
+ * \retval FALSE  Oops, did something.
+ *
+ * Example Usage:
+ * \code
+ *    Database db() ; // create a Database
+ * \endcode
+ */
