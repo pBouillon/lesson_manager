@@ -7,3 +7,7 @@ create table if not exists `user` (
 
     constraint `PK_user` primary key (`login`)
 ) ;
+
+
+-- insert into `user` (`login`, `psswd`, `rights`, `name`)
+-- values ("a", "a", 3, "superuser") ;    
