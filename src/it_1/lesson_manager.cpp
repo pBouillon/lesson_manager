@@ -27,7 +27,8 @@ int main (int argc, char const *argv[])
 {
     Database db ;
 
-    db.login("a", "a") ;
+    db.init((char*)"../../database/sources.sql") ;
+    printf("%d\n",db.login((char*)"a", (char*)"a")) ;
 
     return 0 ;
 } /* main(int argc, char const *argv[]) */

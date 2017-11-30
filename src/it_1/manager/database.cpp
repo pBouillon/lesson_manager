@@ -11,6 +11,10 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 #include <sqlite3.h>
 
@@ -71,19 +75,52 @@ Database::~Database() {
 /**
  *
  */
+int Database::init(char *sql_sources) {
+    int success = 0 ;
+
+    std::string        line ;
+    std::ifstream      file (sql_sources) ;
+    std::ostringstream oss ;
+
+    if (file.is_open()){
+        while ( getline (file,line) ) {
+          oss << line ;
+        }
+        file.close();
+    }
+    else {
+        success = 1 ;
+    }
+
+    check (sqlite3_exec (
+        db, 
+        oss.str().c_str(), 
+        NULL, 
+        NULL, 
+        NULL)
+    ) ;
+    return success ;
+}
+
+/**
+ *
+ */
 int Database::login(char *name, char *psswd) {
-    int rights = -1 ;
-    sqlite3_stmt *stmt;    
+    int rights = 0 ;
+    std::ostringstream oss ;
 
-    const char *query = 
-        "select rights "
-        "from user "
-        "where login like '?' "
-        "and   psswd like '?' ;" ;
+    oss << "select rights " ;
+    oss << "from user " ;
+    oss << "where login like '" << name << "' " ;
+    oss << "and psswd like '" << psswd << "' ;" ;
 
-    check (sqlite3_prepare_v2 (db, query, -1, &stmt, 0)) ;
-    check (sqlite3_bind_text (stmt, 1, name , -1, 0)) ;
-    check (sqlite3_bind_text (stmt, 2, psswd, -1, 0)) ;
+    check (sqlite3_prepare_v2 (
+        db, 
+        oss.str().c_str(), 
+        -1, 
+        &stmt, 
+        0)
+    ) ;
 
     sqlite3_step(stmt) ;
     rights = sqlite3_column_int(stmt, 0) ;
@@ -134,7 +171,7 @@ void Database::connect() {
  * Close the sqlite3 database connection
  */
 void Database::disconnect() {
-    if (connected) {
+    if (connected) {        
         sqlite3_close(db) ;
     }
     connected = false ;

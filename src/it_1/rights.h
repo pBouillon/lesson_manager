@@ -13,9 +13,9 @@
 #define RIGHTS_H_
 
 namespace rights {
-    const int student = 0 ;
-    const int teacher = 1 ;
-    const int admin   = 2 ;
+    const int student = 1 ;
+    const int teacher = 2 ;
+    const int admin   = 3 ;
 }
 
 #endif //RIGHTS_H_

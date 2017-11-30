@@ -29,6 +29,11 @@ public:
     Database (char *source) ;
     ~Database() ;
 
+    int init  (
+        char *sql_sources = 
+            (char*)db_spec::default_sql
+        ) ;
+
     int  login (char *name, char *psswd) ;
 
 private: /* methods */
@@ -36,14 +41,15 @@ private: /* methods */
     void connect () ;
     void disconnect () ;
 
-
 private: /* attributes */
     char *zErrMsg ;
     char *db_path ;
 
     bool connected ;
 
-    sqlite3 *db ; 
+    sqlite3      *db ; 
+    sqlite3_stmt *stmt ;    
+
 } ;
 
 #endif //DATABASE_H_
