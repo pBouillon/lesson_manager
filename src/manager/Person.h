@@ -1,13 +1,13 @@
 /** \file person.h
-  *
-  * \brief Person definition
-  *
-  * \version 0.0.1
-  *
-  * \author Damien Choffe
-  * \author Maxime Nicolas
-  * \author Pierre Bouillon
-  */
+ *
+ * \brief Person definition
+ *
+ * \version 0.0.1
+ *
+ * \author Damien Choffe
+ * \author Maxime Nicolas
+ * \author Pierre Bouillon
+ */
 
 #ifndef UNTITLED_PERSON_H_
 #define UNTITLED_PERSON_H_
