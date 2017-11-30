@@ -1,19 +1,20 @@
-/** \file lesson_manager.cpp
-  *
-  * \brief Entrypoint for the lesson_manager 
-  * 
-  * \version 0.0.1
-  *
-  * \author Damien Choffe
-  * \author Maxime Nicolas
-  * \author Pierre Bouillon
-  */
+/**
+ * \file lesson_manager.cpp
+ * \brief Entrypoint for the lesson_manager 
+ * 
+ * \version 0.0.1
+ *
+ * \author Damien Choffe
+ * \author Maxime Nicolas
+ * \author Pierre Bouillon
+ */
 
 #include <cstdio>
 
 #include "manager/database.h"
 
 /**
+ * \fn    main
  * \brief run the lesson_manager
  *
  * \param   argc    number of program parameters
@@ -25,10 +26,20 @@
  */
 int main (int argc, char const *argv[])
 {
+    int  rights  = -1 ;
+    char admin[] = "a" ;
+    char wrong[] = "b" ;
+    char src[] = "../../database/sources.sql" ;
+
     Database db ;
 
-    db.init((char*)"../../database/sources.sql") ;
-    printf("%d\n",db.login((char*)"a", (char*)"a")) ;
+    db.init(src) ;
+
+    rights = db.login(admin, admin) ;
+    printf("Rights for user [a, a]: %d\n", rights) ;
+
+    rights = db.login(admin, wrong) ;
+    printf("Rights for user [a, b]: %d\n", rights) ;
 
     return 0 ;
 } /* main(int argc, char const *argv[]) */

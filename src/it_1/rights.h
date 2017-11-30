@@ -1,6 +1,6 @@
-/** \file database.h
+/** \file rights.h
  *
- * \brief Database definition
+ * \brief rights definition
  *
  * \version 0.0.1
  *
@@ -12,6 +12,9 @@
 #ifndef RIGHTS_H_
 #define RIGHTS_H_
 
+/**
+ * \namespace rights
+ */
 namespace rights {
     const int student = 1 ;
     const int teacher = 2 ;

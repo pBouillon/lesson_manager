@@ -14,7 +14,9 @@
 
 #include <sqlite3.h>
 
-
+/**
+ * \namespace db_spec
+ */
 namespace db_spec {
     const char * const default_name 
                             = "lesson_manager.db" ;
@@ -33,23 +35,20 @@ public:
         char *sql_sources = 
             (char*)db_spec::default_sql
         ) ;
+    int login (char *name, char *psswd) ;
 
-    int  login (char *name, char *psswd) ;
-
-private: /* methods */
+private: /* private methods */
     void check(int rc) ;
     void connect () ;
     void disconnect () ;
 
 private: /* attributes */
-    char *zErrMsg ;
-    char *db_path ;
-
     bool connected ;
 
-    sqlite3      *db ; 
-    sqlite3_stmt *stmt ;    
+    char *db_path ;
 
+    sqlite3 *db ; 
+    sqlite3_stmt *stmt ;
 } ;
 
 #endif //DATABASE_H_

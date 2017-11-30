@@ -1,5 +1,5 @@
 /** 
- * \file database.
+ * \file database.cpp
  * \brief Database implementation
  *
  * \version 0.0.1
@@ -21,6 +21,7 @@
 #include "database.h"
 
 /**
+ * \fn      Database
  * \name    Database constructor
  * \brief   Instanciate a Database object
  *
@@ -36,9 +37,10 @@ Database::Database() {
     db_path = (char*)db_spec::default_name ;
 
     connect() ;
-}
+} /* Database() */
 
 /**
+ * \fn      Database
  * \name    Database constructor
  * \brief   Instanciate a Database object
  *
@@ -56,9 +58,10 @@ Database::Database(char *source) {
     db_path = source ;
 
     connect() ;
-}
+} /* Database(char *source) */
 
 /**
+ * \fn     ~Database
  * \name    Database destructor
  * \brief   Destroy a Database object
  *
@@ -66,32 +69,43 @@ Database::Database(char *source) {
  */
 Database::~Database() {
     disconnect() ;
-}
+} /* ~Database() */
 
 /*
  *  PUBLIC METHODS ---
  */
 
 /**
+ * \fn init
+ *  
+ * \param sql_sources path to sql file
  *
+ * Example Usage:
+ * \code
+ *    int rc = db.init("./source.sql") ;
+ * \endcode
+ *
+ * \return 0 on succes, 1 otherwise
  */
 int Database::init(char *sql_sources) {
     int success = 0 ;
 
-    std::string        line ;
-    std::ifstream      file (sql_sources) ;
+    std::string   line ;
+    std::ifstream file (sql_sources) ;
     std::ostringstream oss ;
 
-    if (file.is_open()){
-        while ( getline (file,line) ) {
+    // gather sql_sources content into `oss`
+    if (file.is_open()) {
+        while (getline (file, line)) {
           oss << line ;
         }
-        file.close();
+        file.close() ;
     }
-    else {
+    else { // if gathering failed
         success = 1 ;
     }
 
+    // execute base sql gathered into `oss`
     check (sqlite3_exec (
         db, 
         oss.str().c_str(), 
@@ -99,11 +113,22 @@ int Database::init(char *sql_sources) {
         NULL, 
         NULL)
     ) ;
+
     return success ;
-}
+} /* int init(char *sql_sources) */
 
 /**
+ * \fn login
  *
+ * \param name   login 
+ * \param psswd  password
+ *
+ * Example Usage:
+ * \code
+ *      int rights = db.login("user", "1337") ;
+ * \endcode
+ *
+ * \return user rights 
  */
 int Database::login(char *name, char *psswd) {
     int rights = 0 ;
@@ -127,7 +152,7 @@ int Database::login(char *name, char *psswd) {
     sqlite3_finalize(stmt) ;
 
     return rights ;
-}
+} /* int login(char *name, char *psswd) */
 
 /*
  *  PRIVATE METHODS ---
@@ -148,7 +173,7 @@ void Database::check(int rc) {
         fprintf (stderr, "%s\n", sqlite3_errmsg(db)) ;
         exit (EXIT_FAILURE) ;
     }
-}
+} /* void check(int rc) */
 
 /**
  * \fn      connect
@@ -161,7 +186,7 @@ void Database::check(int rc) {
 void Database::connect() {
     check (sqlite3_open(db_path, &db)) ;
     connected = true ;
-}
+} /* void connect() */
 
 /**
  * \fn      disconnect
@@ -175,4 +200,4 @@ void Database::disconnect() {
         sqlite3_close(db) ;
     }
     connected = false ;
-}
+} /* void disconnect() */
