@@ -44,7 +44,7 @@ char * Person::get_name() {
  * \return login
  */
 char * Person::get_login() {
-    return name ;
+    return login ;
 } /* char * get_login() */
 
 
