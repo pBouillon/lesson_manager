@@ -1,4 +1,5 @@
-/** \file database.h
+/**
+ * \file person.ccp
  *
  * \version 0.0.1
  *
@@ -26,21 +27,35 @@ Person::Person(char *_name, char *_login, int _right) {
 Person::~Person() {}
 
 /**
- * \fn getName
+ * \fn get_name
  *
  * \return name
  */
 char * Person::get_name() {
     return name ;
-} /* char * getName() */
+} /* char * get_name() */
 
 /**
- * \fn getRight
+ * \fn get_login
+ *
+ * \return login
+ */
+char * Person::get_login() {
+    return name ;
+} /* char * get_login() */
+
+
+
+
+/**
+ * \fn get_right
  *
  * \return right
  */
 int Person::get_right() {
     return right ;
-} /* int getRight()  */
+} /* int get_right()  */
+
+
 
 

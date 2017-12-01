@@ -11,16 +11,17 @@
 #ifndef LESSON_MANAGER_PERSON_H_
 #define LESSON_MANAGER_PERSON_H_
 
-class Person {
+virtual class Person {
 
 public:
     Person(char *_name, char *_login, int _right) ;
     ~Person() ;
 
     char * get_name() ;
+    char * get_login() ;
     int    get_rights() ;
 
-private: /* attributes */
+protected: /* attributes */
 
     int    right ;
     char * login ;
