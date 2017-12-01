@@ -16,8 +16,9 @@
 #include <sstream>
 #include <string>
 
-#include <sqlite3.h>
+//#include <sqlite3.h>
 
+#include <sqlite3.h>
 #include "database.h"
 
 /**

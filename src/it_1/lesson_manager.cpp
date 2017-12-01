@@ -11,7 +11,7 @@
 
 #include <cstdio>
 
-#include "manager/database.h"
+#include "database.h"
 
 /**
  * \fn    main
