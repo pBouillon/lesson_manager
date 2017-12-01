@@ -13,9 +13,10 @@
  * \param _name  username
  * \param _right user's right
  */
-Person::Person(char * _name, int _right) {
+Person::Person(char *_name, char *_login, int _right) {
     name  = _name ;
     right = _right ;
+    login = _login ;
 }
 
 /**
@@ -29,7 +30,7 @@ Person::~Person() {}
  *
  * \return name
  */
-char * Person::getName() {
+char * Person::get_name() {
     return name ;
 } /* char * getName() */
 
@@ -38,25 +39,8 @@ char * Person::getName() {
  *
  * \return right
  */
-int Person::getRight() {
+int Person::get_right() {
     return right ;
 } /* int getRight()  */
-
-/**
- * \fn toString
- *
- * \return
- */
-char * Person::toString() {
-
-    std::ostringstream oss ;
-
-    oss << "Name : " ;
-    oss << name ;
-    oss << " Right : " ;
-    oss << right ;
-
-    return oss.str().c_str ;
-} /* char * toString() */
 
 

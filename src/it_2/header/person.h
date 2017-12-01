@@ -14,19 +14,29 @@
 class Person {
 
 public:
-    Person(char * name, int right) ;
+    Person(char *_name, char *_login, int _right) ;
     ~Person() ;
 
-    char * getName() ;
-    int getRights() ;
-    char * toString() ;
+    char * get_name() ;
+    int    get_rights() ;
 
 private: /* attributes */
 
-    int right ;
+    int    right ;
+    char * login ;
     char * name ;
 
 } ;
+
+std::ostream& operator<<(std::ostream &oss, const Person &p) {
+
+    oss << "Name : " ;
+    oss << name ;
+    oss << "\r\nRight : " ;
+    oss << right ;
+
+    return oss;
+}
 
 
 #endif /* LESSON_MANAGER_PERSON_H_ */
