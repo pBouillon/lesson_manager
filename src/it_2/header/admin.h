@@ -5,13 +5,10 @@
 
 class Admin: public Person {
 
- private:
-  int toto;
-
  public:
   Admin(char *_name, char* _login, int _right);
   ~Admin();
-  int getToto();
+  std::string get_status() const;
 
 };
 

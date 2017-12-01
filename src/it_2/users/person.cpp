@@ -53,10 +53,13 @@ char * Person::get_login() {
  *
  * \return right
  */
-int Person::get_rights() {
+int Person::get_rights(){
     return right ;
 } /* int get_right()  */
 
+void Person::toString() {
 
-
-
+  std::cout << "Nom : " << name << "\n";
+  std::cout << "Login : " << login << "\n";
+  std::cout << "Status : " << get_status() << "\n";
+}

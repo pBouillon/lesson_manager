@@ -27,22 +27,13 @@ public:
     Person(char *_name, char *_login, int _right) ;
     ~Person() ;
 
-    char * get_name() ;
-    char * get_login() ;
-    int    get_rights() ;
-
-/* std::ostream& operator<<(std::ostream &oss, const Person &p) { */
-
-/*     oss << "Name : " ; */
-/*     oss << name ; */
-/*     oss << "\r\nRight : " ; */
-/*     oss << right ; */
-
-/*     return oss; */
-/* } */
-
+    char * get_name();
+    char * get_login();
+    int    get_rights();
+    void   toString();
+    virtual std::string get_status() const{
+      return ("Personne");
+    }
 } ;
-
-
-
+    
 #endif /* LESSON_MANAGER_PERSON_H_ */

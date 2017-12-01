@@ -1,8 +1,8 @@
 /** 
- * \file database.cpp
- * \brief Database implementation
+ * \file admin.cpp
+ * \brief administrator implementation
  *
- * \version 0.0.1
+ * \version 0.0.2
  *
  * \author Damien Choffe
  * \author Maxime Nicolas
@@ -20,11 +20,7 @@ Admin::Admin(char *_name, char *_login, int _right) : Person(_name, _login, _rig
 
 Admin::~Admin(){}
 
+std::string Admin::get_status() const{
 
-int	main()
-{
-    Admin test((char*)"maxime", (char*)"nicola116u", (int)0);
-    
-    std::cout << test.get_rights() << std::endl;
-    return 0;
+  return ("Admin");
 }

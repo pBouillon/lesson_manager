@@ -98,25 +98,25 @@ int Database::init(char *sql_sources) {
     std::ostringstream oss ;
 
     // gather sql_sources content into `oss`
-    if (file.is_open()) {
+    if (file.is_open() && db == NULL) {
         while (getline (file, line)) {
           oss << line ;
         }
-        file.close() ;
+
+	// execute base sql gathered into `oss`
+	check (sqlite3_exec (
+			     db, 
+			     oss.str().c_str(), 
+			     NULL, 
+			     NULL, 
+			     NULL)
+	       );
+
     }
     else { // if gathering failed
         success = 1 ;
     }
-
-    // execute base sql gathered into `oss`
-    check (sqlite3_exec (
-        db, 
-        oss.str().c_str(), 
-        NULL, 
-        NULL, 
-        NULL)
-    ) ;
-
+    file.close() ;
     return success ;
 } /* int init(char *sql_sources) */
 
