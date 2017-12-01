@@ -9,6 +9,7 @@
  * \author Pierre Bouillon
  */
 
+// basics include
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
@@ -16,9 +17,10 @@
 #include <sstream>
 #include <string>
 
-//#include <sqlite3.h>
-
+// external includes
 #include <sqlite3.h>
+
+// custom headers
 #include "database.h"
 
 /**
