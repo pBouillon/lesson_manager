@@ -14,6 +14,9 @@
  * \param _name  username
  * \param _right user's right
  */
+
+#include "person.h"
+
 Person::Person(char *_name, char *_login, int _right) {
     name  = _name ;
     right = _right ;
@@ -45,14 +48,12 @@ char * Person::get_login() {
 } /* char * get_login() */
 
 
-
-
 /**
  * \fn get_right
  *
  * \return right
  */
-int Person::get_right() {
+int Person::get_rights() {
     return right ;
 } /* int get_right()  */
 

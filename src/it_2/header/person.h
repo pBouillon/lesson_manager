@@ -2,16 +2,26 @@
  *
  * \brief Person definition
  *
- * \version 0.0.1
+ * \version 0.0.2
  *
  * \author Damien Choffe
  * \author Maxime Nicolas
  * \author Pierre Bouillon
  */
+
 #ifndef LESSON_MANAGER_PERSON_H_
 #define LESSON_MANAGER_PERSON_H_
 
-virtual class Person {
+#include <iostream>
+
+class Person {
+
+protected: /* attributes */
+
+    int    right ;
+    char * login ;
+    char * name ;
+
 
 public:
     Person(char *_name, char *_login, int _right) ;
@@ -21,23 +31,18 @@ public:
     char * get_login() ;
     int    get_rights() ;
 
-protected: /* attributes */
+/* std::ostream& operator<<(std::ostream &oss, const Person &p) { */
 
-    int    right ;
-    char * login ;
-    char * name ;
+/*     oss << "Name : " ; */
+/*     oss << name ; */
+/*     oss << "\r\nRight : " ; */
+/*     oss << right ; */
+
+/*     return oss; */
+/* } */
 
 } ;
 
-std::ostream& operator<<(std::ostream &oss, const Person &p) {
-
-    oss << "Name : " ;
-    oss << name ;
-    oss << "\r\nRight : " ;
-    oss << right ;
-
-    return oss;
-}
 
 
 #endif /* LESSON_MANAGER_PERSON_H_ */
