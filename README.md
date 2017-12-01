@@ -18,6 +18,6 @@ School project in C++ to manage lessons.
 - [ ] Lesson validation
 
 #### Credits
-* (Bouillon Pierre)[https://pierrebouillon.tech/]
-* (Choffé Damien)[https://github.com/ChoffeD]
-* (Nicolas Maxime)[https://github.com/NicolasMaxime]
+* [Bouillon Pierre](https://pierrebouillon.tech/)
+* [Choffé Damien](https://github.com/ChoffeD)
+* [Nicolas Maxime](https://github.com/NicolasMaxime)
