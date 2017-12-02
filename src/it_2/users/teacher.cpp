@@ -22,20 +22,25 @@
  * \param _right user's right
  */
 
-Teacher::Teacher(char *_name, char *_login, int _right) : Person(_name, _login, _right) {
-    ;
-}
+Teacher::Teacher (
+    char *_name, 
+    char *_login, 
+    int   _right) 
+: Person(_name, _login, _right) {} /* Teacher() */
 
 /**
- * \name Teacher destructor
+ * \name    Teacher destructor
+ * \brief   Destroy a Teacher object
  *
+ * Destructor for Teacher
  */
-Teacher::~Teacher(){}
+Teacher::~Teacher() = default ;
 
 /**
- * \fn get_status
- *
+ * \fn  get_status
+ *  
+ * \return teacher status
  */
-std::string Teacher::get_status() const{
-  return ("Teacher");
-}
+char* Teacher::get_status() const {
+    return (char*)user_status::teacher ;
+} /* get_status() */

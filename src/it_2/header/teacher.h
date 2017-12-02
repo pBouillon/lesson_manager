@@ -1,5 +1,5 @@
-/** \file teacher.h
- *
+/** 
+ * \file teacher.h
  * \brief Teacher definition
  *
  * \version 0.0.2
@@ -15,12 +15,12 @@
 #include "person.h"
 
 class Teacher: public Person {
+public:
+  Teacher(char *_name, char* _login, int _right) ;
+  ~Teacher() ;
 
- public:
-  Teacher(char *_name, char* _login, int _right);
-  ~Teacher();
-  std::string get_status() const;
+  char* get_status() const ;
 
-};
+} ;
 
 #endif /* ADMIN_H_ */
