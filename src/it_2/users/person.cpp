@@ -1,5 +1,6 @@
 /**
  * \file person.ccp
+ * \brief Person implementation
  *
  * \version 0.0.1
  *
@@ -8,32 +9,40 @@
  * \author Pierre Bouillon
  */
 
+// basics include
+#include <iostream>
+
+// custom headers
 #include "person.h"
 
 /**
- * \name Person constructor
+ * \name    Person constructor
+ * \brief   Instanciate a Person object
  *
- * \param _name  username
- * \param _login user's login
- * \param _right user's right
- */
-
-Person::Person(char *_name, char *_login, int _right) {
+ * Constructor for Person
+ *
+ * \param   _name   username
+ * \param   _login  person's login
+ * \param   _right  person's right
+ */     
+Person::Person (char *_name, char *_login, int _right) {
     name  = _name ;
     right = _right ;
     login = _login ;
-}
+} /* Person (char *_name, char *_login, int _right) */
 
 /**
- * \name Person destructor
+ * \name    Person destructor
+ * \brief   Destroy an Person object
  *
+ * Destructor for Person
  */
-Person::~Person() {}
+Person::~Person() = default ;
 
 /**
  * \fn get_name
  *
- * \return name
+ * \return person's name
  */
 char * Person::get_name() {
     return name ;
@@ -42,30 +51,27 @@ char * Person::get_name() {
 /**
  * \fn get_login
  *
- * \return login
+ * \return person's login
  */
 char * Person::get_login() {
     return login ;
 } /* char * get_login() */
 
-
 /**
- * \fn get_right
+ * \fn get_rights
  *
- * \return right
+ * \return person's right
  */
 int Person::get_rights(){
     return right ;
-} /* int get_right()  */
-
+} /* int get_rights ()  */
 
 /**
  * \fn toString
- *
+ * \brief prints on standart output person's informations
  */
-void Person::toString() {
-
-  std::cout << "Nom : " << name << "\n";
-  std::cout << "Login : " << login << "\n";
-  std::cout << "Status : " << get_status() << "\n";
-}
+void Person::toString () { 
+    std::cout << "Name : "  << name << std::endl ;
+    std::cout << "Login : " << login << std::endl ;
+    std::cout << "Status : "<< get_status() << std::endl ;
+} /* toString () */
