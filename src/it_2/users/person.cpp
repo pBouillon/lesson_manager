@@ -8,14 +8,15 @@
  * \author Pierre Bouillon
  */
 
+#include "person.h"
+
 /**
  * \name Person constructor
  *
  * \param _name  username
+ * \param _login user's login
  * \param _right user's right
  */
-
-#include "person.h"
 
 Person::Person(char *_name, char *_login, int _right) {
     name  = _name ;
@@ -57,6 +58,11 @@ int Person::get_rights(){
     return right ;
 } /* int get_right()  */
 
+
+/**
+ * \fn toString
+ *
+ */
 void Person::toString() {
 
   std::cout << "Nom : " << name << "\n";

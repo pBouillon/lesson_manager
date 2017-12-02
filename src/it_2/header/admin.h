@@ -1,3 +1,14 @@
+/** \file admin.h
+ *
+ * \brief Admin definition
+ *
+ * \version 0.0.2
+ *
+ * \author Damien Choffe
+ * \author Maxime Nicolas
+ * \author Pierre Bouillon
+ */
+
 #ifndef ADMIN_H_
 #define	ADMIN_H_
 
