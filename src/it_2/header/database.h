@@ -1,14 +1,13 @@
-/** \file database.h
- *
+/** 
+ * \file database.h
  * \brief Database definition
  *
- * \version 0.0.1
+ * \version 0.0.2
  *
  * \author Damien Choffe
  * \author Maxime Nicolas
  * \author Pierre Bouillon
  */
-
 #ifndef DATABASE_H_
 #define DATABASE_H_
 
@@ -21,7 +20,7 @@ namespace db_spec {
     const char * const default_name 
                             = "lesson_manager.db" ;
     const char * const default_sql  
-                            = "../../../database/source.sql" ;
+                            = "../../database/source.sql" ;
 }
 
 
@@ -31,10 +30,7 @@ public:
     Database (char *source) ;
     ~Database() ;
 
-    int init  (
-        char *sql_sources = 
-            (char*)db_spec::default_sql
-        ) ;
+    int init  (char *sql_sources) ;
     int login (char *name, char *psswd) ;
 
 private: /* private methods */
@@ -43,12 +39,12 @@ private: /* private methods */
     void disconnect () ;
 
 private: /* attributes */
-    bool connected ;
+    bool connected ; /*!< True if the connection is open */
 
-    char *db_path ;
+    char *db_path ;  /*!< path to .db file */
 
-    sqlite3 *db ; 
-    sqlite3_stmt *stmt ;
+    sqlite3 *db ;    /*!< lesson_manager database */
+    sqlite3_stmt *stmt ; /*!< sqlite3 statement */
 } ;
 
 #endif //DATABASE_H_
