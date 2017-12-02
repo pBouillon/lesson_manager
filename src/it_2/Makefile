@@ -1,8 +1,8 @@
-CC	= 	g++
+CC	= 	g++ 
 
 LIB	=	-lsqlite3
 
-CFLAGS	=	-Wextra -Wall $(LIB)
+CFLAGS	=	-std=c++11 -Wextra -Wall $(LIB)
 
 HEAD	=	-I./header
 
