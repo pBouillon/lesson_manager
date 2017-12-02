@@ -10,33 +10,40 @@
  */
 
 // basics include
-
 #include <iostream>
+
+// custom headers
 #include "student.h"
 
 /**
- * \name Student constructor
+ * \name    Student constructor
+ * \brief   Instanciate a Student object
  *
- * \param _name  username
- * \param _login user's login
- * \param _right user's right
+ * Constructor for Student
+ *
+ * \param   _name   username
+ * \param   _login  student's login
+ * \param   _right  student's right
  */
-
-Student::Student(char *_name, char *_login, int _right) : Person(_name, _login, _right) {
-    ;
-}
+Student::Student (
+    char *_name, 
+    char *_login, 
+    int   _right) 
+: Person(_name, _login, _right) {} /* Student() */
 
 /**
- * \name Student destructor
+ * \name    Student destructor
+ * \brief   Destroy a Student object
  *
+ * Destructor for Student
  */
-
-Student::~Student(){}
+Student::~Student() = default ;
 
 /**
- * \fn get_status
- *
+ * \fn  get_status
+ *  
+ * \return student status
  */
-std::string Student::get_status() const{
-  return ("Student");
-}
+char* Student::get_status() const {
+    return (char*)user_status::student ;
+} /* get_status() */

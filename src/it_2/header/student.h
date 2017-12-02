@@ -1,5 +1,5 @@
-/** \file student.h
- *
+/** 
+ * \file student.h
  * \brief Student definition
  *
  * \version 0.0.2
@@ -8,18 +8,17 @@
  * \author Maxime Nicolas
  * \author Pierre Bouillon
  */
-
 #ifndef STUDENT_H_
 #define	STUDENT_H_
 
 #include "person.h"
 
 class Student: public Person {
+public:
+    Student(char *_name, char* _login, int _right) ;
+    ~Student() ;
 
- public:
-  Student(char *_name, char* _login, int _right);
-  ~Student();
-  std::string get_status() const;
-};
+    char* get_status() const ;
+} ;
 
 #endif /* ADMIN_H_ */
