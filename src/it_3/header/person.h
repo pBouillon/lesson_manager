@@ -1,5 +1,5 @@
-/** \file person.h
- *
+/** 
+ * \file person.h
  * \brief Person definition
  *
  * \version 0.0.2
@@ -8,38 +8,50 @@
  * \author Maxime Nicolas
  * \author Pierre Bouillon
  */
-
 #ifndef LESSON_MANAGER_PERSON_H_
 #define LESSON_MANAGER_PERSON_H_
 
-#include <iostream>
+// basics include
 #include <list>
-#include <iterator>
-#include "cours.h"
+
+// custom headers
+#include "lesson.h"
+
+/**
+ * \namespace user_status
+ */
+namespace user_status {
+    const char * const admin   = "Admin" ;
+    const char * const person  = "Person" ;
+    const char * const student = "Student" ;
+    const char * const teacher = "Teacher" ;
+}
 
 class Person {
-
-protected: /* attributes */
-
-    int    right ;
-    char * login ;
-    char * name ;
-    std::list<Cours*> lesCours;
-
-
 public:
     Person(char *_name, char *_login, int _right) ;
     ~Person() ;
 
-    char	*get_name();
-    char	*get_login();
-    int		get_rights();
-    void	toString();
-    void	add_course(Cours *c);
-    void	showlist();
-    virtual	std::string get_status() const{
-      return ("Personne");
+    char * get_name() ;
+    char * get_login() ;
+
+    int    get_rights() ;
+
+    void   add_lesson(Lesson* l) ;
+    void   toString() ;
+    void   show_list() ;
+
+    virtual char* get_status() const {
+        return (char*)user_status::person ;
     }
+    
+protected: /* attributes */
+    int    right ;
+
+    char * login ;
+    char * name ;
+
+    std::list<Lesson*> lessons ;
 } ;
     
 #endif /* LESSON_MANAGER_PERSON_H_ */

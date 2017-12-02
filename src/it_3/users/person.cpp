@@ -1,5 +1,6 @@
 /**
  * \file person.ccp
+ * \brief Person implementation
  *
  * \version 0.0.1
  *
@@ -7,33 +8,52 @@
  * \author Maxime Nicolas
  * \author Pierre Bouillon
  */
+// basics include
+#include <iostream>
+#include <iterator>
 
+// custom headers
+#include "lesson.h"
 #include "person.h"
 
 /**
- * \name Person constructor
+ * \name    Person constructor
+ * \brief   Instanciate a Person object
  *
- * \param _name  username
- * \param _login user's login
- * \param _right user's right
- */
-
-Person::Person(char *_name, char *_login, int _right) {
+ * Constructor for Person
+ *
+ * \param   _name   username
+ * \param   _login  person's login
+ * \param   _right  person's right
+ */     
+Person::Person (char *_name, char *_login, int _right) {
     name  = _name ;
     right = _right ;
     login = _login ;
-}
+} /* Person (char *_name, char *_login, int _right) */
 
 /**
- * \name Person destructor
+ * \name    Person destructor
+ * \brief   Destroy an Person object
  *
+ * Destructor for Person
  */
-Person::~Person() {}
+Person::~Person() = default ;
+
+/**
+ * \fn      add_lesson
+ * \brief   add a lesson to the current person
+ *
+ * \param   c   lesson to add
+ */
+void Person::add_lesson(Lesson* l) {
+    lessons.push_back(l) ;
+} /* add_course(Cours* l) */
 
 /**
  * \fn get_name
  *
- * \return name
+ * \return person's name
  */
 char * Person::get_name() {
     return name ;
@@ -42,43 +62,42 @@ char * Person::get_name() {
 /**
  * \fn get_login
  *
- * \return login
+ * \return person's login
  */
 char * Person::get_login() {
     return login ;
 } /* char * get_login() */
 
-
 /**
- * \fn get_right
+ * \fn get_rights
  *
- * \return right
+ * \return person's right
  */
 int Person::get_rights(){
     return right ;
-} /* int get_right()  */
+} /* int get_rights ()  */
 
+/**
+ * \fn      show_list
+ * \brief   lists all lessons of the person
+ */
+void Person::show_list() {
+    std::list<Lesson*>::iterator it;
+
+    for (it = lessons.begin(); it != lessons.end(); ++it) {
+        Lesson *l  = *it ;
+        char *name = l->get_name() ;
+
+        std::cout << name << std::endl ;
+    }
+} /* show_list() */
 
 /**
  * \fn toString
- *
+ * \brief prints on standart output person's informations
  */
-void Person::toString() {
-
-  std::cout << "Nom : " << name << "\n";
-  std::cout << "Login : " << login << "\n";
-  std::cout << "Status : " << get_status() << "\n";
-}
-
-void Person::add_course(Cours* c){
-  lesCours.push_back(c);
-}
-
-void Person::showlist() {
-  std::list<Cours*>::iterator  it;
-  for(it = lesCours.begin(); it!= lesCours.end(); it++){
-    Cours *c = *it;
-    char *name = c->get_nom();
-    std::cout << name << '\n';
-  }
-}
+void Person::toString () { 
+    std::cout << "Name : "  << name << std::endl ;
+    std::cout << "Login : " << login << std::endl ;
+    std::cout << "Status : "<< get_status() << std::endl ;
+} /* toString () */

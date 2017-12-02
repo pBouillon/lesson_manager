@@ -10,34 +10,40 @@
  */
 
 // basics include
-
 #include <iostream>
+
+// custom headers
 #include "admin.h"
 
 /**
- * \name Admin constructor
+ * \name    Admin constructor
+ * \brief   Instanciate an Admin object
  *
- * \param _name  username
- * \param _login user's login
- * \param _right user's right
+ * Constructor for Admin
+ *
+ * \param   _name   username
+ * \param   _login  admin's login
+ * \param   _right  admin's right
  */
-
-Admin::Admin(char *_name, char *_login, int _right) : Person(_name, _login, _right) {
-    ;
-}
+Admin::Admin (
+    char *_name, 
+    char *_login, 
+    int   _right) 
+: Person (_name, _login, _right) {} /* Admin() */
 
 /**
- * \name Admin destructor
+ * \name    Admin destructor
+ * \brief   Destroy an Admin object
  *
+ * Destructor for Admin
  */
-Admin::~Admin(){}
-
+Admin::~Admin () = default ;
 
 /**
- * \fn get_status
- *
+ * \fn  get_status
+ *  
+ * \return admin status
  */
-std::string Admin::get_status() const{
-
-  return ("Admin");
-}
+char* Admin::get_status() const {
+    return (char*)user_status::admin ;
+} /* get_status() */

@@ -1,14 +1,14 @@
-CC	= 	g++
+CC	= 	g++ 
 
 LIB	=	-lsqlite3
 
-CFLAGS	=	-Wextra -Wall $(LIB)
+CFLAGS	=	-std=c++11 -Wextra -Wall $(LIB)
 
 HEAD	=	-I./header
 
 SRCS	=	lesson_manager.cpp\
 		manager/database.cpp\
-		manager/cours.cpp\
+		manager/lesson.cpp\
 		users/person.cpp\
 		users/student.cpp\
 		users/teacher.cpp\

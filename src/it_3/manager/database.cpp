@@ -2,7 +2,7 @@
  * \file database.cpp
  * \brief Database implementation
  *
- * \version 0.0.1
+ * \version 0.0.2
  *
  * \author Damien Choffe
  * \author Maxime Nicolas
@@ -24,7 +24,6 @@
 #include "database.h"
 
 /**
- * \fn      Database
  * \name    Database constructor
  * \brief   Instanciate a Database object
  *
@@ -43,7 +42,6 @@ Database::Database() {
 } /* Database() */
 
 /**
- * \fn      Database
  * \name    Database constructor
  * \brief   Instanciate a Database object
  *
@@ -64,7 +62,6 @@ Database::Database(char *source) {
 } /* Database(char *source) */
 
 /**
- * \fn     ~Database
  * \name    Database destructor
  * \brief   Destroy a Database object
  *
