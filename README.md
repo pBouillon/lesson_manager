@@ -9,13 +9,17 @@ School project in C++ to manage lessons.
 - [x] SQLite implementation
 - [x] SQLite connectivity
 - [x] SQL `user` table
-- [x] Rights management
+- [x] Rights implementation
 
 ### Sprint n°2
-- [ ] Admin implementation
-- [ ] Teacher implementation
-- [ ] Lesson creation
-- [ ] Lesson validation
+- [x] Admin implementation
+- [x] Student implementation
+- [x] Teacher implementation
+- [x] Rights management 
+- [x] Login functionnal
+
+### Sprint n°3
+Work in progress
 
 #### Credits
 * [Bouillon Pierre](https://pierrebouillon.tech/)
