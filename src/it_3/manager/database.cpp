@@ -154,6 +154,92 @@ int Database::login(char *name, char *psswd) {
     return rights ;
 } /* int login(char *name, char *psswd) */
 
+/**
+ * \fn save_lesson
+ *
+ * \param lesson's to save
+ *
+ * * Example Usage:
+ * \code
+ *      lesson lesson = new lesson("Math lesson", "Teacher", 20, int _begin, int _end
+ *      int id = db.save_lesson(lesson) ;
+ * \endcode
+ *
+ * \return lesson's id
+ */
+int Database::save_lesson (lesson lesson) {
+    int id ;
+    std::ostringstream oss ;
+
+    oss << "insert into lesson (name, teacher, place, begin, end)" ;
+    oss << "values ( " ;
+    oss << "'" << lesson.get_name() <<"', " ;
+    oss << "'" << lesson.get_teacher() <<"', " ;
+    oss << "'" << lesson.get_place() <<"', " ;
+    oss << "'" << lesson.get_begin() <<"', " ;
+    oss << "'" << lesson.get_end() <<"') ;" ;
+
+    check (sqlite3_prepare_v2 (
+            db,
+            oss.str().c_str(),
+            -1,
+            &stmt,
+            0)
+    ) ;
+
+    sqlite3_step(stmt) ;
+    sqlite3_finalize(stmt) ;
+
+    id = sqlite3_column_int(last_insert_rowid(), 0) ;
+
+    return id ;
+} /* int save_lesson (lesson lesson) */
+
+/**
+ * \fn get_lesson
+ *
+ *
+ * \param id of lesson to get
+ *
+ * \return Lesson object
+ */
+lesson Database::get_lesson(int id) {
+    char* _title ;
+    char* _teacher ;
+    int _place ;
+    int _begin ;
+    int _end ;
+    lesson lesson ;
+
+    std::ostringstream oss ;
+
+    oss << "select * " ;
+    oss << "from lesson " ;
+    oss << "where id = '" << id << "' ;" ;
+
+    check (sqlite3_prepare_v2 (
+            db,
+            oss.str().c_str(),
+            -1,
+            &stmt,
+            0)
+    ) ;
+
+    sqlite3_step(stmt) ;
+
+    char* title   = sqlite3_column_int(stmt, 1) ;
+    char* teacher = sqlite3_column_int(stmt, 2) ;
+    int   place   = sqlite3_column_int(stmt, 3) ;
+    int   begin   = sqlite3_column_int(stmt, 4) ;
+    int   end     = sqlite3_column_int(stmt, 5) ;
+    lesson = new lesson(title, teacher, place, begin, end);
+
+    sqlite3_finalize(stmt) ;
+
+    return lesson;
+} /* lesson get_lesson(int id) */
+
+
 /*
  *  PRIVATE METHODS ---
  */
