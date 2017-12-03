@@ -11,6 +11,7 @@ create table if not exists `user` (
 
 /* TABLE: lesson */
 create table if not exists `lesson` (
+    /* TODO: primary key as constraint */
     `id`        integer       primary key autoincrement not null ,
     `title`     varchar (150) not null,
     `teacher`   varchar (150) not null,
