@@ -13,7 +13,7 @@
 
 #include <sqlite3.h>
 
-#include <lesson.h>
+#include "lesson.h"
 
 /**
  * \namespace db_spec
@@ -25,7 +25,6 @@ namespace db_spec {
                             = "../../database/source.sql" ;
 }
 
-
 class Database {
 public:
     Database () ;
@@ -34,8 +33,8 @@ public:
 
     int init  (char *sql_sources) ;
     int login (char *name, char *psswd) ;
-    int save_lesson (Lesson lesson) ;
-    lesson get_lesson(int id) ;
+    int save_lesson (Lesson *lesson) ;
+    Lesson get_lesson(int id) ;
 
 private: /* private methods */
     void check(int rc) ;

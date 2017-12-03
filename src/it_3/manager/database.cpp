@@ -56,7 +56,7 @@ Database::Database() {
  */
 Database::Database(char *source) {
     connected = false ;
-    db_path = source ;
+    db_path   = source ;
 
     connect() ;
 } /* Database(char *source) */
@@ -169,17 +169,17 @@ int Database::login(char *name, char *psswd) {
  *
  * \return lesson's id
  */
-int Database::save_lesson (Lesson lesson) {
+int Database::save_lesson (Lesson *lesson) {
     int id ;
     std::ostringstream oss ;
 
     oss << "insert into lesson (name, teacher, place, begin, end)" ;
     oss << "values ( " ;
-    oss << "'" << lesson.get_name()    << "', " ;
-    oss << "'" << lesson.get_teacher() << "', " ;
-    oss << "'" << lesson.get_place() << "', " ;
-    oss << "'" << lesson.get_begin() << "', " ;
-    oss << "'" << lesson.get_end()   << "') ;" ;
+    oss << "'" << lesson->get_name()    << "', " ;
+    oss << "'" << lesson->get_teacher() << "', " ;
+    oss << "'" << lesson->get_slots() << "', "  ;
+    oss << "'" << lesson->get_begin() << "', "  ;
+    oss << "'" << lesson->get_end()   << "') ;" ;
 
     check (sqlite3_prepare_v2 (
             db,
@@ -188,11 +188,23 @@ int Database::save_lesson (Lesson lesson) {
             &stmt,
             0)
     ) ;
-
     sqlite3_step(stmt) ;
     sqlite3_finalize(stmt) ;
 
-    id = sqlite3_column_int(last_insert_rowid(), 0) ;
+    oss.clear();
+    oss.str("");
+
+    oss << "select max(id) from lesson ;" ;
+    check (sqlite3_prepare_v2 (
+            db,
+            oss.str().c_str(),
+            -1,
+            &stmt,
+            0)
+    ) ;
+    sqlite3_step(stmt) ;
+    id = sqlite3_column_int(stmt, 0) ;
+    sqlite3_finalize(stmt) ;
 
     return id ;
 } /* int save_lesson (Lesson lesson) */
@@ -206,14 +218,9 @@ int Database::save_lesson (Lesson lesson) {
  * \return Lesson object
  */
 Lesson Database::get_lesson(int id) {
-    char* _teacher ;
-    char* _title ;
-
-    int   _begin ;
-    int   _end ;
-    int   _place ;
-
-    Lesson lesson ;
+    int begin ;
+    int end   ;
+    int slots ;
 
     std::ostringstream oss ;
 
@@ -231,12 +238,13 @@ Lesson Database::get_lesson(int id) {
 
     sqlite3_step(stmt) ;
 
-    char* title   = sqlite3_column_int(stmt, 1) ;
-    char* teacher = sqlite3_column_int(stmt, 2) ;
-    int   place   = sqlite3_column_int(stmt, 3) ;
-    int   begin   = sqlite3_column_int(stmt, 4) ;
-    int   end     = sqlite3_column_int(stmt, 5) ;
-    lesson = new Lesson(title, teacher, place, begin, end) ;
+    char* title   = (char*)sqlite3_column_text(stmt, 1) ;
+    char* teacher = (char*)sqlite3_column_text(stmt, 2) ;
+    slots = sqlite3_column_int(stmt, 3) ;
+    begin = sqlite3_column_int(stmt, 4) ;
+    end   = sqlite3_column_int(stmt, 5) ;  
+
+    Lesson lesson(title, teacher, slots, begin, end) ;
 
     sqlite3_finalize(stmt) ;
 

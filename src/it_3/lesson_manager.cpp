@@ -103,6 +103,8 @@ int	body (char **argv) {
     printf("\n======\n%s\n======\n", "User's lessons") ;
     pers->show_list() ;
 
+    db.save_lesson(l) ;
+
     return EXIT_SUCCESS ;
 } /* body (char **argv) */
 

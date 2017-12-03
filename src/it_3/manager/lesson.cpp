@@ -25,13 +25,11 @@
  * \param _end     End timestamp
  */
 Lesson::Lesson(char* _title, char* _teacher, int _slots, int _begin, int _end) {
-    title   = _title ;
-    teacher = _teacher ;
-    slots   = _slots ;
     begin   = _begin ;
     end     = _end ;
-
-    id = db.save_lesson(this) ;
+    teacher = _teacher ;
+    title   = _title ;
+    slots   = _slots ;
 } /* Lesson(char* title, int _slots, time_t _begin, time_t _end) */
 
 /**
@@ -48,7 +46,7 @@ Lesson::~Lesson() = default ; /* ~Lesson() */
  * \return lesson's name
  */
 char* Lesson::get_name() {
-    return name ;
+    return title ;
 } /* char* get_name() */
 
 /**
