@@ -32,11 +32,10 @@ int main (int argc, char const *argv[])
     int  rights  = -1 ;
     char admin[] = "a" ;
     char wrong[] = "b" ;
-    char src[] = "../../database/sources.sql" ;
 
     Database db ;
 
-    db.init(src) ;
+    db.init ((char*)db_spec::default_sql) ;
 
     rights = db.login(admin, admin) ;
     printf("Rights for user [a, a]: %d\n", rights) ;
