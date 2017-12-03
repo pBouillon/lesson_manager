@@ -96,9 +96,9 @@ int	body (char **argv) {
     pers->toString() ;
 
     // adding lessons
-    Lesson *l = new Lesson((char*)"Biology") ;
+    Lesson *l = new Lesson((char*)"Biology", (char*)"a") ;
     pers->add_lesson(l) ;
-    pers->add_lesson(new Lesson((char*)"Math")) ;
+    pers->add_lesson(new Lesson((char*)"Math", (char*)"a")) ;
     
     printf("\n======\n%s\n======\n", "User's lessons") ;
     pers->show_list() ;

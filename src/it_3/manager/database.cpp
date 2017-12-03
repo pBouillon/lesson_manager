@@ -173,13 +173,13 @@ int Database::save_lesson (Lesson *lesson) {
     int id ;
     std::ostringstream oss ;
 
-    oss << "insert into lesson (name, teacher, place, begin, end)" ;
-    oss << "values ( " ;
-    oss << "'" << lesson->get_name()    << "', " ;
-    oss << "'" << lesson->get_teacher() << "', " ;
-    oss << "'" << lesson->get_slots() << "', "  ;
-    oss << "'" << lesson->get_begin() << "', "  ;
-    oss << "'" << lesson->get_end()   << "') ;" ;
+    oss << "insert into lesson (title, teacher, slots, begin, end)" ;
+    oss << " values ( " ;
+    oss << "\"" << lesson->get_name()    << "\", " ;
+    oss << "\"" << lesson->get_teacher() << "\", " ;
+    oss << lesson->get_slots() << ", "  ;
+    oss << lesson->get_begin() << ", "  ;
+    oss << lesson->get_end()   << ") ;" ;
 
     check (sqlite3_prepare_v2 (
             db,
@@ -191,22 +191,24 @@ int Database::save_lesson (Lesson *lesson) {
     sqlite3_step(stmt) ;
     sqlite3_finalize(stmt) ;
 
-    oss.clear();
-    oss.str("");
+    // oss.clear();
+    // oss.str("");
 
-    oss << "select max(id) from lesson ;" ;
-    check (sqlite3_prepare_v2 (
-            db,
-            oss.str().c_str(),
-            -1,
-            &stmt,
-            0)
-    ) ;
-    sqlite3_step(stmt) ;
-    id = sqlite3_column_int(stmt, 0) ;
-    sqlite3_finalize(stmt) ;
+    // oss << "select max(id) from lesson ;" ;
 
-    return id ;
+    // check (sqlite3_prepare_v2 (
+    //         db,
+    //         oss.str().c_str(),
+    //         -1,
+    //         &stmt,
+    //         0)
+    // ) ;
+    // sqlite3_step(stmt) ;
+    // id = sqlite3_column_int(stmt, 0) ;
+    // id = 0 ;
+    // sqlite3_finalize(stmt) ;
+
+    return (id=0) ;
 } /* int save_lesson (Lesson lesson) */
 
 /**

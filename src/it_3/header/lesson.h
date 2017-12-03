@@ -12,20 +12,18 @@
 #define LESSON_H_
 
 namespace lesson_default {
-    const char * const teacher = "Unknown" ;
-
-    const int slots = -1 ;
-    const int undefined_date   = -1 ;
+    const int slots = 0 ;
+    const int date  = 0 ;
 }
 
 class Lesson {
 public:
     Lesson (
         char* _title, 
-        char* _teacher = (char*)lesson_default::teacher, 
+        char* _teacher, 
         int   _slots = lesson_default::slots, 
-        int   _begin = lesson_default::undefined_date, 
-        int   _end   = lesson_default::undefined_date
+        int   _begin = lesson_default::date, 
+        int   _end   = lesson_default::date
     ) ;
     ~Lesson() ;
     
