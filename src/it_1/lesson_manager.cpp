@@ -26,6 +26,9 @@
  */
 int main (int argc, char const *argv[])
 {
+    (void)argc ;
+    (void)argv ;
+
     int  rights  = -1 ;
     char admin[] = "a" ;
     char wrong[] = "b" ;
