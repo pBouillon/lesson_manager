@@ -161,23 +161,25 @@ int Database::login(char *name, char *psswd) {
  *
  * * Example Usage:
  * \code
- *      lesson lesson = new lesson("Math lesson", "Teacher", 20, int _begin, int _end
+ *      int begin = 1512313200 ; // timestamp at 3/12/2017 16:00:00
+ *      int end   = 1512320400 ; //	timestamp at 3/12/2017 18:00:00
+ *      Lesson lesson = new Lesson("Math lesson", "Teacher", 20, begin, end) ;
  *      int id = db.save_lesson(lesson) ;
  * \endcode
  *
  * \return lesson's id
  */
-int Database::save_lesson (lesson lesson) {
+int Database::save_lesson (Lesson lesson) {
     int id ;
     std::ostringstream oss ;
 
     oss << "insert into lesson (name, teacher, place, begin, end)" ;
     oss << "values ( " ;
-    oss << "'" << lesson.get_name() <<"', " ;
-    oss << "'" << lesson.get_teacher() <<"', " ;
-    oss << "'" << lesson.get_place() <<"', " ;
-    oss << "'" << lesson.get_begin() <<"', " ;
-    oss << "'" << lesson.get_end() <<"') ;" ;
+    oss << "'" << lesson.get_name()    << "', " ;
+    oss << "'" << lesson.get_teacher() << "', " ;
+    oss << "'" << lesson.get_place() << "', " ;
+    oss << "'" << lesson.get_begin() << "', " ;
+    oss << "'" << lesson.get_end()   << "') ;" ;
 
     check (sqlite3_prepare_v2 (
             db,
@@ -193,7 +195,7 @@ int Database::save_lesson (lesson lesson) {
     id = sqlite3_column_int(last_insert_rowid(), 0) ;
 
     return id ;
-} /* int save_lesson (lesson lesson) */
+} /* int save_lesson (Lesson lesson) */
 
 /**
  * \fn get_lesson
@@ -203,13 +205,15 @@ int Database::save_lesson (lesson lesson) {
  *
  * \return Lesson object
  */
-lesson Database::get_lesson(int id) {
-    char* _title ;
+Lesson Database::get_lesson(int id) {
     char* _teacher ;
-    int _place ;
-    int _begin ;
-    int _end ;
-    lesson lesson ;
+    char* _title ;
+
+    int   _begin ;
+    int   _end ;
+    int   _place ;
+
+    Lesson lesson ;
 
     std::ostringstream oss ;
 
@@ -232,12 +236,12 @@ lesson Database::get_lesson(int id) {
     int   place   = sqlite3_column_int(stmt, 3) ;
     int   begin   = sqlite3_column_int(stmt, 4) ;
     int   end     = sqlite3_column_int(stmt, 5) ;
-    lesson = new lesson(title, teacher, place, begin, end);
+    lesson = new Lesson(title, teacher, place, begin, end) ;
 
     sqlite3_finalize(stmt) ;
 
-    return lesson;
-} /* lesson get_lesson(int id) */
+    return lesson ;
+} /* Lesson get_lesson(int id) */
 
 
 /*

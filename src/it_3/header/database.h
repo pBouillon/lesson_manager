@@ -13,6 +13,8 @@
 
 #include <sqlite3.h>
 
+#include <lesson.h>
+
 /**
  * \namespace db_spec
  */
@@ -32,7 +34,7 @@ public:
 
     int init  (char *sql_sources) ;
     int login (char *name, char *psswd) ;
-    int save_lesson (lesson lesson) ;
+    int save_lesson (Lesson lesson) ;
     lesson get_lesson(int id) ;
 
 private: /* private methods */
