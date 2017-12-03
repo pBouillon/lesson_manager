@@ -32,6 +32,8 @@ public:
 
     int init  (char *sql_sources) ;
     int login (char *name, char *psswd) ;
+    int save_lesson (lesson lesson) ;
+    lesson get_lesson(int id) ;
 
 private: /* private methods */
     void check(int rc) ;
