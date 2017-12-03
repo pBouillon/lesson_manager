@@ -20,10 +20,12 @@ private:
     int begin ;
     int end ;
     int id ;
-    int place ;
+    int slots ;
+
+    Database db ;
 
 public:
-    Lesson(char* _title, char* _teacher, int _place, int _begin, int _end) ;
+    Lesson(char* _title, char* _teacher, int _slots, int _begin, int _end) ;
     ~Lesson() ;
     
     char* get_name() ;
@@ -31,7 +33,7 @@ public:
 
     int get_begin() ;
     int get_end() ;
-    int get_place() ;
+    int get_slots() ;
 
 } ;
 

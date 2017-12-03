@@ -12,7 +12,6 @@
 // custom headers
 #include "lesson.h"
 
-
 /**
  * \name Lesson constructor
  * \brief   Instanciate a Lesson object
@@ -21,17 +20,19 @@
  *
  * \param _title   Lesson's title
  * \param _teacher Lesson's teacher id
- * \param _place   Number of place
+ * \param _slots   Available slots
  * \param _begin   Begin timestamp
  * \param _end     End timestamp
  */
-Lesson::Lesson(char* _title, char* _teacher, int _place, int _begin, int _end) {
+Lesson::Lesson(char* _title, char* _teacher, int _slots, int _begin, int _end) {
     title   = _title ;
     teacher = _teacher ;
-    place   = _place ;
+    slots   = _slots ;
     begin   = _begin ;
     end     = _end ;
-} /* Lesson(char* title, int _place, time_t _begin, time_t _end) */
+
+    id = db.save_lesson(this) ;
+} /* Lesson(char* title, int _slots, time_t _begin, time_t _end) */
 
 /**
  * \name    Lesson destructor
@@ -60,13 +61,13 @@ char* Lesson::get_teacher() {
 } /* char* get_teacher() */
 
 /**
- * \fn get_place()
+ * \fn get_slots()
  *
- * \return lesson's place
+ * \return lesson's slots
  */
-int Lesson::get_place() {
-    return place ;
-} /* int get_place() */
+int Lesson::get_slots() {
+    return slots ;
+} /* int get_slots() */
 
 /**
  * \fn get_begin()
