@@ -16,6 +16,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <sys/types.h>
+#include <dirent.h>
 
 // external includes
 #include <sqlite3.h>
@@ -78,24 +80,48 @@ Database::~Database() {
 /**
  * \fn init
  *  
- * \param sql_sources path to sql file
+ * \param sql_sources_folder path to sql folder
  *
  * Example Usage:
  * \code
- *    int rc = db.init("./source.sql") ;
+ *    int rc = db.init("./source_sql") ;
  * \endcode
  *
  * \return 0 on succes, 1 otherwise
  */
-int Database::init(char *sql_sources) {
-    int success = 0 ;
+int Database::init(char *sql_sources_folder) {
+    int success = 0;
+    char * file_path;
+    DIR* dirp = opendir(sql_sources_folder) ;
+    struct dirent * dp ;
+    while ((dp = readdir(dirp)) != NULL) {
+	file_path = get_sql_path(dp->d_name) ; 	
+	success += init_table(file_path) ;
+    }
+    closedir(dirp) ;
+    return success > 0 ;
+}/* int init(char *sql_sources_folder)  */
 
+/**
+ * \fn init_table
+ *  
+ * \param sql_sources path to sql file
+ *
+ * Example Usage:
+ * \code
+ *    int rc = db.init_table("./source.sql") ;
+ * \endcode
+ *
+ * \return 0 on succes, 1 otherwise
+ */
+int Database::init_table(char *sql_sources) {
+    int success = 0 ;
     std::string   line ;
     std::ifstream file (sql_sources) ;
     std::ostringstream oss ;
 
     // gather sql_sources content into `oss`
-    if (file.is_open() && db == NULL) {
+    if (file.is_open()) {
         while (getline (file, line)) {
           oss << line ;
         }
@@ -115,7 +141,7 @@ int Database::init(char *sql_sources) {
     }
     file.close() ;
     return success ;
-} /* int init(char *sql_sources) */
+} /* int init_table(char *sql_sources) */
 
 /**
  * \fn login
@@ -174,13 +200,13 @@ int Database::save_lesson (Lesson *lesson) {
     std::ostringstream oss ;
 
     oss << "insert into lesson (title, teacher, slots, begin, end)" ;
-    oss << " values ( " ;
-    oss << "\"" << lesson->get_name()    << "\", " ;
-    oss << "\"" << lesson->get_teacher() << "\", " ;
+    oss << " values (" ;
+    oss << "'" << lesson->get_name()    << "', " ;
+    oss << "'" << lesson->get_teacher() << "', " ;
     oss << lesson->get_slots() << ", "  ;
     oss << lesson->get_begin() << ", "  ;
     oss << lesson->get_end()   << ") ;" ;
-
+	
     check (sqlite3_prepare_v2 (
             db,
             oss.str().c_str(),
@@ -190,23 +216,23 @@ int Database::save_lesson (Lesson *lesson) {
     ) ;
     sqlite3_step(stmt) ;
     sqlite3_finalize(stmt) ;
+	
+    oss.clear();
+    oss.str("");
 
-    // oss.clear();
-    // oss.str("");
+    oss << "select max(id) from lesson ;" ;
 
-    // oss << "select max(id) from lesson ;" ;
-
-    // check (sqlite3_prepare_v2 (
-    //         db,
-    //         oss.str().c_str(),
-    //         -1,
-    //         &stmt,
-    //         0)
-    // ) ;
-    // sqlite3_step(stmt) ;
-    // id = sqlite3_column_int(stmt, 0) ;
-    // id = 0 ;
-    // sqlite3_finalize(stmt) ;
+    check (sqlite3_prepare_v2 (
+             db,
+             oss.str().c_str(),
+             -1,
+             &stmt,
+             0)
+    ) ;
+    sqlite3_step(stmt) ;
+    id = sqlite3_column_int(stmt, 0) ;
+    id = 0 ;
+    sqlite3_finalize(stmt) ;
 
     return (id=0) ;
 } /* int save_lesson (Lesson lesson) */
@@ -301,3 +327,18 @@ void Database::disconnect() {
     }
     connected = false ;
 } /* void disconnect() */
+
+/**
+ * \fn get_sql_path
+ *
+ * \param filename 
+ *
+ * \return formated path to file
+ */
+char* Database::get_sql_path(char* filename) {
+   std::ostringstream oss ;
+   oss << db_spec::default_sql ;
+   oss << "/" ;
+   oss << filename ;
+   return (char*)oss.str().c_str() ;   
+} /* char* get_sql_path(char* filename) */

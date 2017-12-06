@@ -15,6 +15,7 @@
 
 #include "lesson.h"
 
+
 /**
  * \namespace db_spec
  */
@@ -22,7 +23,7 @@ namespace db_spec {
     const char * const default_name 
                             = "lesson_manager.db" ;
     const char * const default_sql  
-                            = "../../database/source.sql" ;
+                            = "../../database" ;
 }
 
 class Database {
@@ -31,7 +32,8 @@ public:
     Database (char *source) ;
     ~Database() ;
 
-    int init  (char *sql_sources) ;
+    int init (char *sql_sources_folder) ;
+    int init_table (char *sql_sources) ;
     int login (char *name, char *psswd) ;
     int save_lesson (Lesson *lesson) ;
     Lesson get_lesson(int id) ;
@@ -40,6 +42,8 @@ private: /* private methods */
     void check(int rc) ;
     void connect () ;
     void disconnect () ;
+   
+    char* get_sql_path(char* filename) ;
 
 private: /* attributes */
     bool connected ; /*!< True if the connection is open */
