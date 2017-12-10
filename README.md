@@ -29,7 +29,20 @@ School project in C++ to manage lessons.
 ```
 
 ## Sprint n°3
-Work in progress
+- [x] Lesson implementation
+- [x] Lesson creation
+- [x] Lesson saving
+### Launch
+```shell
+~$ make
+~$ ./lesson_manager <user> <login>
+```
+
+# Sprint n°4
+Work in progress...
+- [ ] Basic GUI
+- [ ] Unit tests
+- [ ] Lesson ressources
 
 ## Credits
 * [Bouillon Pierre](https://pierrebouillon.tech/)
