@@ -13,12 +13,20 @@
 
 #include "person.h"
 
+#include "database.h"
+
+#define  ADMIN_CHOICE_PENDING  1
+
 class Admin: public Person {
 public:
     Admin(char *_name, char* _login, int _right) ;
     ~Admin() ;
 
     char* get_status() const;
-};
+    int   show_menu(Database *db) ;
+
+private:
+    void show_pending(Database *db) ;
+} ;
 
 #endif /* ADMIN_H_ */

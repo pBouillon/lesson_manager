@@ -15,6 +15,7 @@
 #include <list>
 
 // custom headers
+#include "database.h"
 #include "lesson.h"
 
 /**
@@ -43,6 +44,11 @@ public:
 
     virtual char* get_status() const {
         return (char*)user_status::person ;
+    }
+
+    virtual int show_menu(Database *db) {
+        (void)db ;
+        return 0 ;
     }
     
 protected: /* attributes */

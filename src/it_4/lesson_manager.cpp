@@ -12,8 +12,11 @@
 // basics include
 #include <cstdio>
 #include <cstdlib>
+#include <unistd.h>
 
 // custom headers
+#include "console_colors.h"
+
 #include "admin.h"
 #include "database.h"
 #include "lesson.h"
@@ -21,7 +24,11 @@
 #include "student.h"
 #include "teacher.h"
 
-#define  ARG_REQUIRED  3  /*!< Minimal args requirement */
+#define  ARG_REQUIRED  2  /*!< Minimal args requirement */
+
+Database db;    /*!< sqlite3 Bridge */
+Person  *pers;  /*!< Current user */
+
 
 /**
  * \fn      abort_lm
@@ -35,43 +42,32 @@
 void abort_lm (char* err_msg, int status =  EXIT_FAILURE) {
     fprintf (
         stderr, 
-        "-- ERROR --\n\t%s\n", 
+        ANSI_COLOR_RED "-- ERROR --\t%s" ANSI_COLOR_RESET "\n", 
         err_msg
     ) ;
     exit (status) ;
 } /* abort_lm (char* err_msg, int status) */
 
 /**
- * \fn      body
- * \brief   run the lesson_manager core
+ * \fn     connect
+ * \brief  connect the user
+ * 
+ * instanciate `Personne pers`
+ * abort the program on failure
  *
- * Establish a connection with the database and connect the user
- *
- * \param   argv    program parameters
- *
- * \return  0 on success
+ * \return the user's rights
  */
-int	body (char **argv) {
-    // user's rights
-    int  u_rights ;
-
-    // user's credentials
-    char *login  = argv[1] ;
-    char *passwd = argv[2] ;
-
-    // user's name
+int connect(char* login) {
+    int  u_rights = -1 ;
     char name[] = "undefined" ;
+    char buff[1024] ;
+    char *passwd ;   
 
-    // database connectivity
-    Database db;
-    Person  *pers;
-    
-    // starting communication with the database
-    db.init ((char*)db_spec::default_sql) ;
-    u_rights = db.login (login, passwd) ;
-   
-    // Checking user's rights
-    switch (u_rights) {
+    snprintf(buff, 1024, "\n%s %s > ", "Password for", login) ;
+    passwd = getpass(buff) ;
+
+    // Checking user's credentials
+    switch ((u_rights = db.login (login, passwd))) {
         case rights::student:
             pers = new Student(name, login, u_rights) ; 
             break ;
@@ -85,34 +81,19 @@ int	body (char **argv) {
             abort_lm ((char*)"Unknown credentials") ;
     }
 
-    // Displays user's informations
-    printf("\n======\n%s\n======\n", "User's info") ;
     printf (
-        "Rights for user [%s, %s]: %d\n", 
-        login, 
-        passwd, 
-        u_rights
+        "\n-- Welcome %s --\n", 
+        login
     ) ;
-    pers->toString() ;
 
-    // adding lessons
-    Lesson *l = new Lesson((char*)"Biology", (char*)"a") ;
-    pers->add_lesson(l) ;
-    pers->add_lesson(new Lesson((char*)"Math", (char*)"a")) ;
-    
-    printf("\n======\n%s\n======\n", "User's lessons") ;
-    pers->show_list() ;
-
-    db.save_lesson(l) ;
-
-    return EXIT_SUCCESS ;
-} /* body (char **argv) */
+    return u_rights ;
+} /* connect */
 
 /**
  * \fn      main
  * \brief   run the lesson_manager
  *
- * Check args and launch lesson_manager core
+ * Connect the user and display its menu
  *
  * \param   argc    number of program parameters
  * \param   argv    program parameters
@@ -122,8 +103,13 @@ int	body (char **argv) {
 int main (int argc, char *argv[])
 {
     if (argc != ARG_REQUIRED) {
-        abort_lm ((char*)"usage: ./lesson_manager <login> <psswd>") ;
+        abort_lm ((char*)"usage: ./lesson_manager <login>") ;
     }
-    
-    return (body (argv)) ;
+
+    connect(argv[1]) ;
+    db.init ((char*)db_spec::default_sql) ;
+
+    while (pers->show_menu(&db) != 0) {}
+
+    return (0) ;
 } /* main(int argc, char const *argv[]) */
