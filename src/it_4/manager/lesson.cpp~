@@ -24,10 +24,9 @@
  * \param _begin   Begin timestamp
  * \param _end     End timestamp
  */
-Lesson::Lesson(char* _title, char* _teacher, sqlite3 *_db, int _slots, int _begin, int _end) {
+Lesson::Lesson(char* _title, char* _teacher, int _slots, int _begin, int _end) {
     begin   = _begin ;
     end     = _end ;
-    db      = _db ;
     teacher = _teacher ;
     title   = _title ;
     slots   = _slots ;

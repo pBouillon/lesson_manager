@@ -35,7 +35,7 @@ public: /* methods */
     int get_begin() ;
     int get_end() ;
     int get_slots() ;
-    int save_lesson () ;
+    int save_lesson (Lesson *lesson) ;
     Lesson get_lesson(int id) ;
 
 private: /* attributes */
