@@ -36,8 +36,9 @@ public:
     int init_table (char *sql_sources) ;
     int login (char *name, char *psswd) ;
 
+    static void check(int rc) ;
+
 private: /* private methods */
-    void check(int rc) ;
     void connect () ;
     void disconnect () ;
    

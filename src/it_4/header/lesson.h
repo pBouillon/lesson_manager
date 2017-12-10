@@ -11,6 +11,8 @@
 #ifndef LESSON_H_
 #define LESSON_H_
 
+#include <sqlite3.h>
+
 namespace lesson_default {
     const int slots = 0 ;
     const int date  = 0 ;
@@ -29,13 +31,13 @@ public:
     ~Lesson() ;
     
 public: /* methods */
-    char* get_name() ;
+    char* get_title() ;
     char* get_teacher() ;
 
     int get_begin() ;
     int get_end() ;
     int get_slots() ;
-    int save_lesson () ;
+    int save() ;
     Lesson get_lesson(int id) ;
 
 private: /* attributes */
@@ -46,7 +48,7 @@ private: /* attributes */
     int end ;
     int id ;
     int slots ;
-
+    
     sqlite3 *db ;    /*!< lesson_manager database */
     sqlite3_stmt *stmt ; /*!< sqlite3 statement */
 } ;
