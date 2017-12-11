@@ -81,10 +81,7 @@ int connect(char* login) {
             abort_lm ((char*)"Unknown credentials") ;
     }
 
-    printf (
-        "\n-- Welcome %s --\n", 
-        login
-    ) ;
+    printf("\n-- Welcome %s --\n", login) ;
 
     return u_rights ;
 } /* connect */
@@ -106,9 +103,10 @@ int main (int argc, char *argv[])
         abort_lm ((char*)"usage: ./lesson_manager <login>") ;
     }
 
-    connect(argv[1]) ;
     db.init ((char*)db_spec::default_sql) ;
-
+    connect(argv[1]) ;
+    
+    
     while (pers->show_menu(&db) != 0) {}
 
     return (0) ;

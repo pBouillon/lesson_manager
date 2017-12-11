@@ -10,7 +10,14 @@
  */
 
 // custom headers
+
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 #include "lesson.h"
+#include "database.h"
+
 
 /**
  * \name Lesson constructor
@@ -44,38 +51,30 @@ Lesson::~Lesson() = default ; /* ~Lesson() */
 /**
  * \fn save_lesson
  *
- * \param lesson's to save
- *
  * * Example Usage:
  * \code
  *      int begin = 1512313200 ; // timestamp at 3/12/2017 16:00:00
  *      int end   = 1512320400 ; //	timestamp at 3/12/2017 18:00:00
  *      Lesson lesson = new Lesson("Math lesson", "Teacher", 20, begin, end) ;
- *      int id = db.save_lesson(lesson) ;
+ *      int id = lesson.save() ;
  * \endcode
  *
  * \return lesson's id
  */
-int Database::save_lesson () {
+int Lesson::save (Database *db) {
     int id ;
     std::ostringstream oss ;
-
+    sqlite3_stmt *stmt ;
+     
     oss << "insert into lesson (title, teacher, slots, begin, end)" ;
     oss << " values (" ;
-    oss << "'" << this->get_name()    << "', " ;
-    oss << "'" << this->get_teacher() << "', " ;
-    oss << this->get_slots() << ", "  ;
-    oss << this->get_begin() << ", "  ;
-    oss << this->get_end()   << ") ;" ;
+    oss << "'" << title    << "', " ;
+    oss << "'" << teacher << "', " ;
+    oss << slots << ", "  ;
+    oss << begin << ", "  ;
+    oss << end   << ") ;" ;
 	
-    check (sqlite3_prepare_v2 (
-            db,
-            oss.str().c_str(),
-            -1,
-            &stmt,
-            0)
-    ) ;
-    sqlite3_step(stmt) ;
+    stmt = db->request(oss.str().c_str());
     sqlite3_finalize(stmt) ;
 	
     oss.clear();
@@ -83,20 +82,14 @@ int Database::save_lesson () {
 
     oss << "select max(id) from lesson ;" ;
 
-    check (sqlite3_prepare_v2 (
-             db,
-             oss.str().c_str(),
-             -1,
-             &stmt,
-             0)
-    ) ;
+    stmt = db->request(oss.str().c_str());
     sqlite3_step(stmt) ;
     id = sqlite3_column_int(stmt, 0) ;
     id = 0 ;
     sqlite3_finalize(stmt) ;
 
-    return (id=0) ;
-} /* int save_lesson () */
+    return (id) ;
+} /* int save () */
 
 /**
  * \fn get_lesson
@@ -106,29 +99,26 @@ int Database::save_lesson () {
  *
  * \return Lesson object
  */
-Lesson Database::get_lesson(int id) {
+Lesson Lesson::get_lesson(int id, Database *db) {
     int begin ;
     int end   ;
     int slots ;
+    char *title;
+    char *teacher;
 
     std::ostringstream oss ;
-
+    sqlite3_stmt *stmt ;
+    
     oss << "select * " ;
     oss << "from lesson " ;
     oss << "where id = '" << id << "' ;" ;
 
-    check (sqlite3_prepare_v2 (
-            db,
-            oss.str().c_str(),
-            -1,
-            &stmt,
-            0)
-    ) ;
+    stmt = db->request(oss.str().c_str());
 
     sqlite3_step(stmt) ;
 
-    char* title   = (char*)sqlite3_column_text(stmt, 1) ;
-    char* teacher = (char*)sqlite3_column_text(stmt, 2) ;
+    title   = (char*)sqlite3_column_text(stmt, 1) ;
+    teacher = (char*)sqlite3_column_text(stmt, 2) ;
     slots = sqlite3_column_int(stmt, 3) ;
     begin = sqlite3_column_int(stmt, 4) ;
     end   = sqlite3_column_int(stmt, 5) ;  
@@ -142,13 +132,13 @@ Lesson Database::get_lesson(int id) {
 
 
 /**
- * \fn get_name()
+ * \fn get_title()
  *
- * \return lesson's name
+ * \return lesson's title
  */
-char* Lesson::get_name() {
+char* Lesson::get_title() {
     return title ;
-} /* char* get_name() */
+} /* char* get_title() */
 
 /**
  * \fn get_teacher()

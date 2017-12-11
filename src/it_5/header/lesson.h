@@ -11,6 +11,8 @@
 #ifndef LESSON_H_
 #define LESSON_H_
 
+#include "database.h"
+
 namespace lesson_default {
     const int slots = 0 ;
     const int date  = 0 ;
@@ -21,7 +23,6 @@ public:
     Lesson (
         char* _title, 
         char* _teacher, 
-	sqlite3 *_db,
         int   _slots = lesson_default::slots, 
         int   _begin = lesson_default::date, 
         int   _end   = lesson_default::date
@@ -29,14 +30,14 @@ public:
     ~Lesson() ;
     
 public: /* methods */
-    char* get_name() ;
+    char* get_title() ;
     char* get_teacher() ;
 
     int get_begin() ;
     int get_end() ;
     int get_slots() ;
-    int save_lesson (Lesson *lesson) ;
-    Lesson get_lesson(int id) ;
+    int save(Database *) ;
+    Lesson get_lesson(int id, Database *) ;
 
 private: /* attributes */
     char* title ;
@@ -46,9 +47,6 @@ private: /* attributes */
     int end ;
     int id ;
     int slots ;
-
-    sqlite3 *db ;    /*!< lesson_manager database */
-    sqlite3_stmt *stmt ; /*!< sqlite3 statement */
 } ;
 
 #endif /* LESSON_H_ */
