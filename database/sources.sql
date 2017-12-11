@@ -25,8 +25,8 @@ create table if not exists `lesson` (
  --insert into `user` (`login`, `psswd`, `rights`, `name`)
  --values ("a", "a", 3, "superuser") ;    
 
- --insert into `user` (`login`, `psswd`, `rights`, `name`)
- --values ("random", "student", 1, "eleve") ;
+ -- insert into `user` (`login`, `psswd`, `rights`, `name`)
+ -- values ("s", "s", 1, "eleve") ;
 
- --insert into `user` (`login`, `psswd`, `rights`, `name`)
- --values ("random", "teach", 2, "superuser") ;    
+ -- insert into `user` (`login`, `psswd`, `rights`, `name`)
+ -- values ("t", "t", 2, "superuser") ;    
