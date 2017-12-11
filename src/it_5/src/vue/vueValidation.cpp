@@ -23,7 +23,6 @@ VueValidation::~VueValidation() {
 void VueValidation::updateVue(){
   std::ostringstream os;
   char *name = mod->getName();
-  std::cout << name << std::endl;
   os << "Bonjour " << name << " ! ";
   lab->setText(os.str().c_str());
 

@@ -14,7 +14,7 @@ void Observer::update(){
   Observable *o;
   
   for (i  = 0; i != vue.count(); i++){
-    o = (Observable*)vue[i];
+    o = vue.at(i);
     o->updateVue();
   }
 }

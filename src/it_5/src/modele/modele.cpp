@@ -21,6 +21,7 @@ int Modele::connect_people(char *login, char *passwd){
     init_person(right);
     name = login;
     setWin(1);
+    win->updateVue();
     setWindow(win);
   }
   return right;
