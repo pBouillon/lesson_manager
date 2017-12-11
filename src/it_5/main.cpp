@@ -14,6 +14,7 @@
 #include	<iostream>
 #include	"vueConnection.hpp"
 #include	"vueValidation.hpp"
+#include	"vuePrincipale.hpp"
 #include	"modele.hpp"
 
 void init(Modele *mod){
@@ -27,12 +28,13 @@ void init(Modele *mod){
 int main (int argc, char *argv[])
 {
   QApplication app(argc, argv);
-  Observable *o;
   Modele *mod = new Modele();
-
   init(mod);
-  o = mod->window();
-  o = mod->get(0);
-  o->show();
+  mod->setWin(0);
+
+  VuePrincipale *vp = new VuePrincipale();
+  mod->setPrincipale(vp);
+  mod->setWindow(mod->get(0));
+  vp->show();
   return (app.exec()) ;
 } /* main(int argc, char const *argv[]) */

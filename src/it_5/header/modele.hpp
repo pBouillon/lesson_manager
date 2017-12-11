@@ -12,6 +12,7 @@ public:
   
   int connect_people(char *, char*);
   char	*getName();
+  void	setWin(int);
   Observable *window();
 
 private:

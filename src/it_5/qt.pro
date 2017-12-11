@@ -3,6 +3,7 @@ SOURCES = \
   src/modele/modele.cpp \
   src/modele/observer.cpp \
   src/modele/observable.cpp \
+  src/vue/vuePrincipale.cpp \
   src/vue/vueConnection.cpp \
   src/vue/vueValidation.cpp \
   src/modele/manager/database.cpp 

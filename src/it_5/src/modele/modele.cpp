@@ -20,6 +20,8 @@ int Modele::connect_people(char *login, char *passwd){
   if (right > 0) {
     init_person(right);
     name = login;
+    setWin(1);
+    setWindow(win);
   }
   return right;
 }
@@ -30,6 +32,10 @@ char *Modele::getName(){
 
 void Modele::update(){
   update();
+}
+
+void  Modele::setWin(int id){
+  win = get(id);
 }
 
 Observable *Modele::window(){

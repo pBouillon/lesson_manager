@@ -1,4 +1,5 @@
 #include "observer.hpp"
+#include "vuePrincipale.hpp"
 
 Observer::Observer(){}
 
@@ -22,3 +23,12 @@ Observable *Observer::get(int id){
   Observable *o = vue.at(id);
   return o;
 }
+
+void	Observer::setPrincipale(VuePrincipale *v){
+  vp = v;
+}
+
+void	Observer::setWindow(Observable *o){
+  vp->setVue(o);
+}
+
