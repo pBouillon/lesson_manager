@@ -61,12 +61,12 @@ char* Admin::get_status() const {
  */
 int Admin::show_menu(Database *db) {
     int choice = -1 ;
-
+    std::cout << "ici" << std::endl;
     do {
-        printf (
+      printf(
             ANSI_COLOR_CYAN "\n%s\n" ANSI_COLOR_RESET, 
             "Select an action: "
-        ) ;
+	      ) ;
         printf (
             ANSI_COLOR_BLUE "\t%d/%s\n" ANSI_COLOR_RESET, 
             ADMIN_CHOICE_PENDING,

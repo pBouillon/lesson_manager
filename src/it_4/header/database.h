@@ -13,9 +13,6 @@
 
 #include <sqlite3.h>
 
-#include "lesson.h"
-
-
 /**
  * \namespace db_spec
  */
@@ -35,8 +32,8 @@ public:
     int init (char *sql_sources_folder) ;
     int init_table (char *sql_sources) ;
     int login (char *name, char *psswd) ;
-
-    static void check(int rc) ;
+    sqlite3_stmt *request(const char *req);
+    void check(int rc) ;
 
 private: /* private methods */
     void connect () ;
@@ -53,4 +50,4 @@ private: /* attributes */
     sqlite3_stmt *stmt ; /*!< sqlite3 statement */
 } ;
 
-#endif //DATABASE_H_
+#endif /* !DATABASE_H_ */

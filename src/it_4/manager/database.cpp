@@ -165,15 +165,7 @@ int Database::login(char *name, char *psswd) {
     oss << "where login like '" << name << "' " ;
     oss << "and psswd like '" << psswd << "' ;" ;
 
-    check (sqlite3_prepare_v2 (
-        db, 
-        oss.str().c_str(), 
-        -1, 
-        &stmt, 
-        0)
-    ) ;
-
-    sqlite3_step(stmt) ;
+    stmt = request(oss.str().c_str());
     rights = sqlite3_column_int(stmt, 0) ;
     sqlite3_finalize(stmt) ;
 
@@ -228,6 +220,26 @@ void Database::disconnect() {
     }
     connected = false ;
 } /* void disconnect() */
+
+/**
+ * \fn      request
+ * \name    make a request to the db
+ * \param  rc  the request
+ *
+ * \return the raw result of the request
+ */
+sqlite3_stmt *Database::request(const char *req){
+      check (sqlite3_prepare_v2 (
+        db, 
+        req, 
+        -1, 
+        &stmt, 
+        0)
+    ) ;
+
+    sqlite3_step(stmt) ;
+    return stmt;
+}
 
 /**
  * \fn get_sql_path

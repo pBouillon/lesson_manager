@@ -86,7 +86,7 @@ void Person::show_list() {
 
     for (it = lessons.begin(); it != lessons.end(); ++it) {
         Lesson *l  = *it ;
-        char *name = l->get_name() ;
+        char *name = l->get_title() ;
 
         std::cout << name << std::endl ;
     }
