@@ -3,9 +3,9 @@
 School project in C++ to manage lessons. 
 
 ## Requirements
-* GTest
-* Qt
-* SQLite3
+* SQLite3 (since Sprint n°1)
+* GTest (for Sprint n°4)
+* Qt (for Sprint n°5)
 
 ### GTest installation
 ```shell
@@ -16,6 +16,12 @@ School project in C++ to manage lessons.
 ~$ make
 ~$  cp *.a /usr/lib
 ```
+
+### Default credentials:
+(as "role: login password")
+  - Admin:   
+  - Teacher: 
+  - Student: 
 
 ## Sprint n°1
 - [x] SQLite implementation
