@@ -180,7 +180,7 @@ void Teacher::create_lesson(Database *db) {
 
     Lesson *l = new Lesson(
                     (char*)title.c_str(), 
-                    this->name,
+                    this->login,
                     slots,
                     (int)begin,
                     (int)end
@@ -211,43 +211,63 @@ void Teacher::create_lesson(Database *db) {
  * \param  db  link to the database
  */
 void Teacher::list_lessons(Database *db) {
+
+    std::ostringstream oss ;
+    sqlite3_stmt *stmt ;
+
+    oss << "select title " ;
+    oss << "from lesson  " ;
+    oss << "where teacher like" ;
+    oss << "\"" << this->login << "\";" ;
+    
+    stmt = db->request(oss.str().c_str());
+	
     printf (
         ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
         "Your lessons: "
     ) ;
-    for(int i = 0; i < 5; ++i) {
-        printf (
-            "\t- %s :\n\t\t" ANSI_COLOR_YELLOW "STATUS: " ANSI_COLOR_RESET "%s\n\n", 
-            "aaaaaaaaaa",
-            "Pending"
-        ) ;
-    }
 
-    (void)db ;
-    return ;
+    do {
+        printf (
+            "\t%s\n", 
+            (char*)sqlite3_column_text(stmt, 0)
+        ) ;
+    } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
+
+    sqlite3_finalize(stmt) ;
 } /* list_lessons */
 
 /**
- * \fn     create_students
+ * \fn     list_students
  * \brief  list teacher's students
  *
  * \param  db  link to the database
  */
-void Teacher::list_students(Database *db) {
+void Teacher::list_students(Database *db) {  
+    std::ostringstream oss ;
+    sqlite3_stmt *stmt ;
+
+    oss << "select name " ;
+    oss << "from user u, lesson l, subscriber s " ;
+    oss << "where l.teacher like" ;
+    oss << "\"" << this->login << "\"" ;
+    oss << "and u.login = s.login and l.id = s.lesson_id  ;" ;
+    
+    stmt = db->request(oss.str().c_str());
+	
     printf (
         ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
         "Your students: "
     ) ;
-    for (int i = 0; i < 5; ++i) {
+    
+    do {
         printf (
             "\t%s\n", 
-            "aaaaa bbbbb"
+            (char*)sqlite3_column_text(stmt, 0)
         ) ;
-    }
+    } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
 
-
-    (void)db ;
-    return ;
+    sqlite3_finalize(stmt) ;
 } /* list_students */
 
 /**

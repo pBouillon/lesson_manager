@@ -16,6 +16,11 @@ School project in C++ to manage lessons.
 ~$ make
 ~$  cp *.a /usr/lib
 ```
+### Default credentials:
+(as "role: login password")
+- Admin   : admin admin
+- Teacher : teach teach
+- Student : student student 
 
 ## Sprint n°1
 - [x] SQLite implementation

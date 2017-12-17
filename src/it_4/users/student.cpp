@@ -110,18 +110,20 @@ int Student::show_menu(Database *db) {
 } /* show_menu */
 
 /**
- * \fn     show_lessons
- * \brief  displays available lessons
+ * \fn     show_sub
+ * \brief  displays student's lessons
  *
  * \param  *db  link to the database
  */
-void Student::show_lessons(Database *db) {
+void Student::show_sub(Database *db) {
     std::ostringstream oss ;
     sqlite3_stmt *stmt ;
 
     oss << "select l.title " ;
     oss << "from lesson l, subscriber s " ;
-    oss << "where s.login like l.login and l.id = s.lesson_id;" ;
+    oss << "where s.login like ";
+    oss << "\"" << this->login << "\"" ;
+    oss << " and l.id = s.lesson_id;" ;
     
     stmt = db->request(oss.str().c_str());
 
@@ -130,7 +132,6 @@ void Student::show_lessons(Database *db) {
         "Subscribed lessons: "
     ) ;
     
-    // TODO: resolve 'Bad parameter or other API misuse'
     do {
         printf (
             "\t%s -- %s\n", 
@@ -140,15 +141,15 @@ void Student::show_lessons(Database *db) {
     } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
 
     sqlite3_finalize(stmt) ;
-} /* show_lessons */
+} /* show_sub */
 
 /**
- * \fn     show_sub
- * \brief  displays student's lessons
+ * \fn     show_lessons
+ * \brief  displays available lessons
  *
  * \param  *db  link to the database
  */
-void Student::show_sub(Database *db) {
+void Student::show_lessons(Database *db) {
     std::ostringstream oss ;
     sqlite3_stmt *stmt ;
 
@@ -163,7 +164,6 @@ void Student::show_sub(Database *db) {
         "Available lessons: "
     ) ;
     
-    // TODO: resolve 'Bad parameter or other API misuse'
     do {
         printf (
             "\t%s -- %s\n", 
@@ -173,4 +173,4 @@ void Student::show_sub(Database *db) {
     } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
 
     sqlite3_finalize(stmt) ;
-}
+}/* show_lesson */
