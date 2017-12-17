@@ -20,7 +20,7 @@ namespace db_spec {
     const char * const default_name 
                             = "lesson_manager.db" ;
     const char * const default_sql  
-                            = "../../database" ;
+                            = "../../database/sources.sql" ;
 }
 
 class Database {
@@ -29,8 +29,7 @@ public:
     Database (char *source) ;
     ~Database() ;
 
-    int init (char *sql_sources_folder) ;
-    int init_table (char *sql_sources) ;
+    int init (char *sql_sources) ;
     int login (char *name, char *psswd) ;
     sqlite3_stmt *request(const char *req);
     void check(int rc) ;

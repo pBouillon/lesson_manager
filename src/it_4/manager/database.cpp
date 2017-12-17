@@ -80,7 +80,7 @@ Database::~Database() {
 /**
  * \fn init
  *  
- * \param sql_sources_folder path to sql folder
+ * \param sql_sources path to sql file
  *
  * Example Usage:
  * \code
@@ -89,35 +89,7 @@ Database::~Database() {
  *
  * \return 0 on succes, 1 otherwise
  */
-int Database::init(char *sql_sources_folder) {
-    int    success = 0 ;
-    char * file_path ;
-    struct dirent * dp ;
-
-    DIR* dirp = opendir(sql_sources_folder) ;
-
-    while ((dp = readdir(dirp)) != NULL) {
-    	file_path = get_sql_path (dp->d_name) ; 	
-    	success  += init_table (file_path) ;
-    }
-    
-    closedir(dirp) ;
-    return success > 0 ;
-}/* int init(char *sql_sources_folder)  */
-
-/**
- * \fn init_table
- *  
- * \param sql_sources path to sql file
- *
- * Example Usage:
- * \code
- *    int rc = db.init_table("./source.sql") ;
- * \endcode
- *
- * \return 0 on succes, 1 otherwise
- */
-int Database::init_table(char *sql_sources) {
+int Database::init(char *sql_sources) {
     int success = 0 ;
     std::string   line ;
     std::ifstream file (sql_sources) ;
@@ -127,8 +99,9 @@ int Database::init_table(char *sql_sources) {
     if (file.is_open()) {
         while (getline (file, line)) {
           oss << line ;
-        }
-
+        }	
+	//printf("%s\r\n", sql_sources) ;
+	//printf("%s\r\n\r\n\r\n", oss.str().c_str()) ;
 	// execute base sql gathered into `oss`
 	check (sqlite3_exec (
 			     db, 
@@ -144,7 +117,7 @@ int Database::init_table(char *sql_sources) {
     }
     file.close() ;
     return success ;
-} /* int init_table(char *sql_sources) */
+}/* int init(char *sql_sources)  */
 
 /**
  * \fn login
@@ -191,8 +164,8 @@ int Database::login(char *name, char *psswd) {
  */
 void Database::check(int rc) {
     if (rc != SQLITE_OK) {
-        disconnect() ;
         fprintf (stderr, "%s\n", sqlite3_errmsg(db)) ;
+        disconnect() ;
         exit (EXIT_FAILURE) ;
     }
 } /* void check(int rc) */
@@ -232,7 +205,7 @@ void Database::disconnect() {
  * \return the raw result of the request
  */
 sqlite3_stmt *Database::request(const char *req){
-      check (sqlite3_prepare_v2 (
+     check (sqlite3_prepare_v2 (
         db, 
         req, 
         -1, 
