@@ -1,6 +1,23 @@
+/**
+ * \file  vueConnection.cpp
+ * \brief Entrypoint for the lesson_manager 
+ * 
+ * \version 0.0.5
+ *
+ * \author Damien Choffe
+ * \author Maxime Nicolas
+ * \author Pierre Bouillon
+ */
+
 #include <iostream>
 #include "vueConnection.hpp"
 
+/**
+ * \fn      VueConnection constructor
+ * \brief   init a VueConnection object
+ *
+ *
+ */
 VueConnection::VueConnection(Modele *m) : Observable() {
 
   mod = m;
@@ -28,9 +45,21 @@ VueConnection::VueConnection(Modele *m) : Observable() {
   setLayout(box);
 }
 
+/**
+ * \name    VueConnection destructor
+ * \brief   Destroy a VueConnection object
+ *
+ * Destructor for VueConnection
+ */
 VueConnection::~VueConnection() {
 } /* ~VueConnection() */
 
+
+/**
+ * \name    submitValue
+ * \brief   submit login and passwd
+ *
+ */
 void VueConnection::submitValue(){
   char *login = (char*)lineLogin->text().toUtf8().constData();
   char *pass = (char*)linePasswd->text().toUtf8().constData();
@@ -42,6 +71,11 @@ void VueConnection::submitValue(){
     error->hide();
 }
 
+/**
+ * \name    updateVue
+ * \brief   update the view
+ *
+ */
 void VueConnection::updateVue(){
   std::cout << "update de vue Connection" << std::endl;
 }
