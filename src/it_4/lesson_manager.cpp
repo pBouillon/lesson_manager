@@ -67,12 +67,6 @@ int connect(char* login) {
     snprintf(buff, 1024, "\n%s %s > ", "Password for", login) ;
     passwd = getpass(buff) ;
 
-    // Awful hack
-    // if (strcmp((char*)"teacher", login) == 0) {
-    //     pers = new Teacher(name, login, u_rights) ; 
-    //     return rights::teacher ;
-    // }
-
     // Checking user's credentials
     switch ((u_rights = db.login (login, passwd))) {
         case rights::student:
