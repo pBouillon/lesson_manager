@@ -11,6 +11,10 @@
 
 // basics include
 #include <iostream>
+#include <sstream>
+
+// database
+#include <sqlite3.h>
 
 // custom headers
 #include "admin.h"
@@ -61,9 +65,8 @@ char* Admin::get_status() const {
  */
 int Admin::show_menu(Database *db) {
     int choice = -1 ;
-    std::cout << "ici" << std::endl;
     do {
-      printf(
+      printf (
             ANSI_COLOR_CYAN "\n%s\n" ANSI_COLOR_RESET, 
             "Select an action: "
 	      ) ;
@@ -107,18 +110,30 @@ int Admin::show_menu(Database *db) {
  * \param  *db  link to the database
  */
 void Admin::show_pending(Database *db) {
+    char *teacher ;
+    char *title  ;
+
+    std::ostringstream oss ;
+    sqlite3_stmt *stmt ;
+
+    oss << "select title, teacher " ;
+    oss << "from lesson " ;
+    oss << "where published = 0 ;" ;
+    
+    stmt = db->request(oss.str().c_str());
+
     printf (
         ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
         "Pending lessons: "
     ) ;
-    for(int i = 0; i < 5; ++i) {
-        printf (
-            "\t%i - %s\n", 
-            i,
-            "................"
-        ) ;
-    }
+    
+    // TODO: resolve 'Bad parameter or other API misuse'
+    do {
+        title   = (char*)sqlite3_column_text(stmt, 0) ;
+        teacher = (char*)sqlite3_column_text(stmt, 1) ;
+        printf("\t%s -- %s\n", title, teacher) ;
 
-    (void)db ;
-    return ;
+    } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
+
+    sqlite3_finalize(stmt) ;   
 } /* show_pending */

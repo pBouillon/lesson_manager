@@ -90,14 +90,17 @@ Database::~Database() {
  * \return 0 on succes, 1 otherwise
  */
 int Database::init(char *sql_sources_folder) {
-    int success = 0;
-    char * file_path;
-    DIR* dirp = opendir(sql_sources_folder) ;
+    int    success = 0 ;
+    char * file_path ;
     struct dirent * dp ;
+
+    DIR* dirp = opendir(sql_sources_folder) ;
+
     while ((dp = readdir(dirp)) != NULL) {
-	file_path = get_sql_path(dp->d_name) ; 	
-	success += init_table(file_path) ;
+    	file_path = get_sql_path (dp->d_name) ; 	
+    	success  += init_table (file_path) ;
     }
+    
     closedir(dirp) ;
     return success > 0 ;
 }/* int init(char *sql_sources_folder)  */
