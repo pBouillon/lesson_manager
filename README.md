@@ -53,9 +53,12 @@ Work in progress...
 ```
 
 # Sprint n°4
-Work in progress...
-- [ ] CLI for lesson_manager
-- [ ] Database reworking
+- [x] CLI for lesson_manager
+- [x] Database reworking
+- [x] Connection from terminal
+- [x] Admin management from terminal
+- [x] Teacher management from terminal
+- [x] Student management from terminal
 
 # Sprint n°5
 Work in progress...
