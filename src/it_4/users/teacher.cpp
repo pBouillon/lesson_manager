@@ -13,6 +13,7 @@
 #include <iostream>
 #include <cstring>
 #include <ctime>
+#include <sstream>
 
 // custom headers
 #include "console_colors.h"
@@ -136,9 +137,10 @@ void Teacher::cancel_input(char* reason) {
  * go back to show_menu on wrong input
  */
 void Teacher::create_lesson(Database *db) {
-    std::string  title ;
-    int    slots ;
+    std::string  choice, title ;
+
     time_t begin, end ;
+    int    slots ;
 
     printf (
         ANSI_COLOR_CYAN "%s" ANSI_COLOR_RESET, 
@@ -176,13 +178,30 @@ void Teacher::create_lesson(Database *db) {
         return ;
     }
 
-    printf (
-        ANSI_COLOR_YELLOW "\nLesson %s successfully created\n" ANSI_COLOR_RESET, 
-        title.c_str()
-    ) ;    
+    Lesson *l = new Lesson(
+                    (char*)title.c_str(), 
+                    this->name,
+                    slots,
+                    (int)begin,
+                    (int)end
+                ) ;
 
-    (void)db ;
-    return ;
+    printf (
+        ANSI_COLOR_YELLOW "\nLesson %s successfully created, save it? (y/n)\n\t>" ANSI_COLOR_RESET, 
+        title.c_str()
+    ) ; 
+    std::cin >> choice ;
+    if (choice.compare("y") == 0) {
+        l->save(db) ;
+        printf (
+            ANSI_COLOR_YELLOW "\nLesson saved !\n" ANSI_COLOR_RESET
+        ) ;
+    }
+    else {
+        printf (
+            ANSI_COLOR_RED "\nLesson creation aborted\n" ANSI_COLOR_RESET
+        ) ;
+    }
 } /* create_lesson */
 
 /**

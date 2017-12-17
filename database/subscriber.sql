@@ -5,9 +5,12 @@ create table if not exists `subscriber` (
     `state`    	integer       not null,
     `order`     integer	      not null,
 
-    constraint `PK_user`   primary key (`login`, `lesson_id`),
-    constraint `FK_lesson` foreign key (`lesson_id`) 
+    constraint `PK_user` 
+        primary key (`login`, `lesson_id`),
+    constraint `FK_lesson` 
+        foreign key (`lesson_id`) 
 		references lesson(`id`),
-    constraint `FK_user`   foreign key (`login`) 
+    constraint `FK_user`
+        foreign key (`login`) 
 		references user(`login`)	
 ) ;
