@@ -11,6 +11,7 @@
 
 // basics include
 #include <iostream>
+#include <sstream>
 
 // custom headers
 #include "console_colors.h"
@@ -115,17 +116,30 @@ int Student::show_menu(Database *db) {
  * \param  *db  link to the database
  */
 void Student::show_lessons(Database *db) {
+    std::ostringstream oss ;
+    sqlite3_stmt *stmt ;
+
+    oss << "select title, teacher " ;
+    oss << "from lesson " ;
+    oss << "where published <> 0 ;" ;
+    
+    stmt = db->request(oss.str().c_str());
+
     printf (
         ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
-        "Your lessons: "
+        "Available lessons: "
     ) ;
-    for(int i = 0; i < 5; ++i) {
+    
+    // TODO: resolve 'Bad parameter or other API misuse'
+    do {
         printf (
-            "\t%i - %s\n", 
-            i,
-            "................"
+            "\t%s -- %s\n", 
+            (char*)sqlite3_column_text(stmt, 0), 
+            (char*)sqlite3_column_text(stmt, 1)
         ) ;
-    }
+    } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
+
+    sqlite3_finalize(stmt) ;   
 
     (void)db ;
     return ;
