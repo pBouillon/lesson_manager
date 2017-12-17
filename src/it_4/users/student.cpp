@@ -119,6 +119,39 @@ void Student::show_lessons(Database *db) {
     std::ostringstream oss ;
     sqlite3_stmt *stmt ;
 
+    oss << "select l.title " ;
+    oss << "from lesson l, subscriber s " ;
+    oss << "where s.login like l.login and l.id = s.lesson_id;" ;
+    
+    stmt = db->request(oss.str().c_str());
+
+    printf (
+        ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
+        "Subscribed lessons: "
+    ) ;
+    
+    // TODO: resolve 'Bad parameter or other API misuse'
+    do {
+        printf (
+            "\t%s -- %s\n", 
+            (char*)sqlite3_column_text(stmt, 0), 
+            (char*)sqlite3_column_text(stmt, 1)
+        ) ;
+    } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
+
+    sqlite3_finalize(stmt) ;
+} /* show_lessons */
+
+/**
+ * \fn     show_sub
+ * \brief  displays student's lessons
+ *
+ * \param  *db  link to the database
+ */
+void Student::show_sub(Database *db) {
+    std::ostringstream oss ;
+    sqlite3_stmt *stmt ;
+
     oss << "select title, teacher " ;
     oss << "from lesson " ;
     oss << "where published <> 0 ;" ;
@@ -139,31 +172,5 @@ void Student::show_lessons(Database *db) {
         ) ;
     } while (sqlite3_step(stmt) == SQLITE_ROW) ; 
 
-    sqlite3_finalize(stmt) ;   
-
-    (void)db ;
-    return ;
-} /* show_lessons */
-
-/**
- * \fn     show_sub
- * \brief  displays student's lessons
- *
- * \param  *db  link to the database
- */
-void Student::show_sub(Database *db) {
-    printf (
-        ANSI_COLOR_CYAN "%s\n" ANSI_COLOR_RESET, 
-        "Available lessons: "
-    ) ;
-    for(int i = 0; i < 15; ++i) {
-        printf (
-            "\t%i - %s\n", 
-            i,
-            "................"
-        ) ;
-    }
-
-    (void)db ;
-    return ;
+    sqlite3_finalize(stmt) ;
 }
